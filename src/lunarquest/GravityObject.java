@@ -8,6 +8,8 @@ import java.awt.Graphics;
 
 public class GravityObject extends TransformObject {
     
+    public static final double GRAVITATIONAL_CONSTANT = 0.0000000000006;
+    
     private Vector vel;
 
     public GravityObject(FrameOfReference parent, Vector pos, double rotation, Vector vel) {
@@ -34,8 +36,9 @@ public class GravityObject extends TransformObject {
     
     public void gravitateTowards(CelestialObject body) {
         double distanceSq = Math.pow(getPos().distance(body.getPos()), 2);
-        double gravMagnitude = body.getMass()/distanceSq;
+        double gravMagnitude = GRAVITATIONAL_CONSTANT*body.getMass()/distanceSq;
         Vector gravForce = body.getPos().subtract(getPos()).normalized().multiply(gravMagnitude);
+        System.out.println("gravForce: ["+gravForce.x+","+gravForce.y+"], length: "+gravForce.magnitude());
         setVel(getVel().add(gravForce));
     }
 

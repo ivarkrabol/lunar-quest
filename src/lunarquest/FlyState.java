@@ -7,6 +7,7 @@ import ggf.GameState;
 import ggf.GameStateManager;
 import ggf.Vector;
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 public class FlyState extends GameState implements FrameOfReference {
@@ -15,8 +16,7 @@ public class FlyState extends GameState implements FrameOfReference {
     private ArrayList<CelestialObject> celestialObjects;
     private ArrayList<GravityObject> gravityObjects;
     private Space space;
-    private EarthObject earth;
-    private RocketObject rocket;
+    private boolean active;
     
     
     public FlyState() {
@@ -28,14 +28,17 @@ public class FlyState extends GameState implements FrameOfReference {
         space = new Space(this, windowCenter);
         gameObjects.add(space);
         
-        earth = new EarthObject(space, Vector.NULL, 100);
+        EarthObject earth = new EarthObject(space, Vector.NULL, 1000000);
+        earth.setScale(0.0001);
         celestialObjects.add(earth);
         gameObjects.add(earth);
         
-        rocket = new RocketObject(space, new Vector(-200, 0), 0, new Vector(0, -0.1));
-        rocket.setScale(10);
+        RocketObject rocket = new RocketObject(space, new Vector(-150, 0), 0, new Vector(0, -0.1));
+        rocket.setScale(5);
         gravityObjects.add(rocket);
         gameObjects.add(rocket);
+        
+        active = false;
     }
     
     @Override
@@ -47,6 +50,9 @@ public class FlyState extends GameState implements FrameOfReference {
 
     @Override
     public void update(GameClock clock, GameStateManager stateManager, GameInput input) {
+        if(input.isKeyDown(KeyEvent.VK_SPACE)) active = true;
+        if(!active) return;
+        
         for(GravityObject object : gravityObjects) {
             for(CelestialObject body : celestialObjects) {
                 object.gravitateTowards(body);
