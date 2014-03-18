@@ -1,18 +1,47 @@
 package lunarquest;
 
 import ggf.Vector;
+import java.awt.Color;
+import java.awt.Graphics;
 
-public class CelestialObject extends CircleObject {
+public class CelestialObject extends GravityObject {
     
-    public static final double DENSITY_CONSTANT = 0.00004;
+    public static final double DENSITY_CONSTANT = 19000.0;
+    
+    private CircleObject visualObject;
 
-    public CelestialObject(FrameOfReference parent, Vector pos, double radius) {
-        super(parent, pos, radius);
+    public CelestialObject(FrameOfReference parent, Vector pos, Vector vel, double radius) {
+        super(parent, pos, 0, vel);
+        visualObject = new CircleObject(this, Vector.NULL, radius);
         
     }
     
+    @Override
     public double getMass() {
         return Math.pow(getRadius(),3)*DENSITY_CONSTANT;
+    }
+    
+    public double getRadius() {
+        return visualObject.getRadius();
+    }
+    
+    public void setRadius(double radius) {
+        visualObject.setRadius(radius);
+    }
+    
+    @Override
+    public Color getFillColor() {
+        return visualObject.getFillColor();
+    }
+    
+    @Override
+    public void setFillColor(Color color) {
+        visualObject.setFillColor(color);
+    }
+
+    @Override
+    public void draw(Graphics g) {
+        visualObject.draw(g);
     }
 
 }

@@ -1,16 +1,23 @@
 package lunarquest;
 
 import ggf.Game;
+import ggf.GameClock;
 import ggf.GameGraphicsManager;
 import ggf.GameStateManager;
 import java.awt.Color;
-import javax.swing.SwingUtilities;
 
 public class LunarQuest extends Game {
+    
+    private GameClock clock;
 
     public LunarQuest() {
         init("Lunar Quest");
         start();
+    }
+    
+    @Override
+    protected void setupClock(GameClock clock) {
+        this.clock = clock;
     }
     
     @Override
@@ -21,7 +28,7 @@ public class LunarQuest extends Game {
 
     @Override
     protected void setupStates(GameStateManager stateManager) {
-        stateManager.addState("FlyState", new FlyState());
+        stateManager.addState("FlyState", new FlyState(clock));
         stateManager.setCurrentState("FlyState");
     }
     

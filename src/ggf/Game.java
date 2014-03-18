@@ -18,6 +18,7 @@ public abstract class Game {
     
     protected void init(String windowTitle) {
         clock = new GameClock(getFramesPerSecond());
+        setupClock(clock);
         input = new GameInput();
         stateManager = new GameStateManager();
         setupStates(stateManager);
@@ -38,7 +39,7 @@ public abstract class Game {
             update();
             repaint();
             
-            int timeLeft = clock.frameTimeLeft();
+            int timeLeft = (int)clock.frameTimeLeft();
             if (timeLeft < 10) timeLeft = 10;
             try {
                 Thread.sleep(timeLeft);
@@ -48,8 +49,8 @@ public abstract class Game {
     
     private void update() {
         clock.update();
-        input.update();
         stateManager.update(clock, input);
+        input.update();
     }
     
     private void repaint() {
@@ -64,7 +65,8 @@ public abstract class Game {
         return framesPerSecond;
     }
     
-    protected void setupStates(GameStateManager stateManager) { }
+    protected void setupClock(GameClock clock) {}
+    protected void setupStates(GameStateManager stateManager) {}
     protected void setupGraphics(GameGraphicsManager graphicsManager) {}
     
 }

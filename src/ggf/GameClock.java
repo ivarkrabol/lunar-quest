@@ -5,44 +5,70 @@ public class GameClock {
     public static final int NANOSEC_IN_MILLISEC = 1000000;
     public static final int MILLISEC_IN_SEC = 1000;
     
-    private final int startTime;
-    private int runTime;
-    private int updateTime;
-    private int frameTime;
+    private final double startTime;
+    private double runTime;
+    private double deltaTime;
+    private double frameTime;
+    private double timeScale;
     
-    public GameClock(int framesPerSecond) {
-        startTime = (int)(System.nanoTime()/NANOSEC_IN_MILLISEC);
+    public GameClock(double framesPerSecond) {
+        startTime = (System.nanoTime()/NANOSEC_IN_MILLISEC);
         runTime = 0;
         frameTime = MILLISEC_IN_SEC/framesPerSecond;
+        timeScale = 1;
     }
     
-    public void setFPS(int framesPerSecond) {
+    public void setFPS(double framesPerSecond) {
         frameTime = MILLISEC_IN_SEC/framesPerSecond;
+    }
+
+    public double getTimeScale() {
+        return timeScale;
+    }
+
+    public void setTimeScale(double timeScale) {
+        this.timeScale = timeScale;
     }
     
     public void update() {
-        int newRunTime = (int)(System.nanoTime()/NANOSEC_IN_MILLISEC) - startTime;
-        updateTime = newRunTime - runTime;
+        double newRunTime = System.nanoTime()/NANOSEC_IN_MILLISEC - startTime;
+        deltaTime = newRunTime - runTime;
         runTime = newRunTime;
     }
     
-    public int startTime() {
-        return startTime();
+    public double startTime() {
+        return startTime;
     }
     
-    public int updateTime() {
-        return updateTime;
+    public double deltaTime() {
+        return deltaTime;
     }
     
-    public int runTime() {
+    public double runTime() {
         return runTime;
     }
     
-    public int frameTimeLeft() {
-        return startTime + runTime + frameTime - (int)(System.nanoTime()/NANOSEC_IN_MILLISEC);
+    public double frameTimeLeft() {
+        return startTime + runTime + frameTime - System.nanoTime()/NANOSEC_IN_MILLISEC;
     }
     
-    public int getTrueFPS() {
-        return MILLISEC_IN_SEC/updateTime;
+    public double sStartTime() {
+        return startTime * timeScale;
+    }
+    
+    public double sDeltaTime() {
+        return deltaTime * timeScale;
+    }
+    
+    public double sRunTime() {
+        return runTime * timeScale;
+    }
+    
+    public double sFrameTimeLeft() {
+        return (startTime + runTime + frameTime - System.nanoTime()/NANOSEC_IN_MILLISEC) * timeScale;
+    }
+    
+    public double getTrueFPS() {
+        return MILLISEC_IN_SEC/deltaTime;
     }
 }

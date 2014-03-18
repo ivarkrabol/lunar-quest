@@ -11,12 +11,12 @@ public class RocketObject extends GravityObject {
     public RocketObject(FrameOfReference parent, Vector pos, double rotation, Vector vel) {
         super(parent, pos, rotation, vel);
         
-        PolygonObject rocket = new PolygonObject(this, Vector.NULL, 0, 3);
+        PolygonObject rocket = new PolygonObject(this, Vector.NULL, 0, 4);
         rocket.setFillColor(Color.WHITE);
         rocket.setScale(3);
         rocket.setPoints(
-                new double[]{ 0.87,-0.87, 0.00},
-                new double[]{ 0.50, 0.50,-1.00});
+                new double[]{ 10.0,  0.0,-10.0,  0.0},
+                new double[]{ 25.0, 15.0, 25.0,-25.0});
         
         CircleObject window = new CircleObject(this, Vector.NULL, 1);
         window.setFillColor(Color.DARK_GRAY);
@@ -24,6 +24,11 @@ public class RocketObject extends GravityObject {
         
         visualObjects = new TransformObject[]{window, rocket};
         
+    }
+    
+    @Override
+    public double getMass() {
+        return 50000;
     }
 
     @Override

@@ -9,7 +9,7 @@ public class EarthObject extends CelestialObject {
     private TransformObject[] visualDetails;
 
     public EarthObject(FrameOfReference parent, Vector pos, double radius) {
-        super(parent, pos, radius);
+        super(parent, pos, Vector.NULL, radius);
         setFillColor(LQConstants.COLOR_BLUE);
         defineVisualDetails();
     }
