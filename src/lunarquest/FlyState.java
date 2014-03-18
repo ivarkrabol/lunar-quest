@@ -35,22 +35,19 @@ public class FlyState extends GameState implements FrameOfReference {
         gameObjects.add(space);
         
         EarthObject earth = new EarthObject(space, Vector.NULL, 60000);
-        earth.setScale(1);
         celestialObjects.add(earth);
         gravityObjects.add(earth);
         gameObjects.add(earth);
         
         CelestialObject moon = new CelestialObject(space, new Vector(4000000, 0), Vector.NULL, 17000);
         moon.attemptCircularOrbit(earth);
-        moon.setScale(1);
         moon.setFillColor(Color.WHITE);
         celestialObjects.add(moon);
         gravityObjects.add(moon);
         gameObjects.add(moon);
         
-        rocket = new RocketObject(space, new Vector(0, -60000.75), 0, Vector.NULL);
+        rocket = new RocketObject(space, new Vector(0, -80000), 0, Vector.NULL);
         rocket.attemptCircularOrbit(earth);
-        rocket.setScale(0.01);
         gravityObjects.add(rocket);
         gameObjects.add(rocket);
         
