@@ -5,7 +5,7 @@ import ggf.GameInput;
 import ggf.GameObject;
 import ggf.GameState;
 import ggf.GameStateManager;
-import ggf.Vector;
+import ggf.geom.Vector;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
@@ -46,7 +46,7 @@ public class FlyState extends GameState implements FrameOfReference {
         gravityObjects.add(moon);
         gameObjects.add(moon);
         
-        rocket = new RocketObject(space, new Vector(0, -80000), 0, Vector.NULL);
+        rocket = new RocketObject(space, new Vector(0, -60000.75), 0, Vector.NULL);
         rocket.attemptCircularOrbit(earth);
         gravityObjects.add(rocket);
         gameObjects.add(rocket);
@@ -90,7 +90,7 @@ public class FlyState extends GameState implements FrameOfReference {
             }
         }
         
-        space.setPos(WINDOW_CENTER.add(focusObject.getPos().multiply(space.getScale()).negative()));
+        space.setPos(WINDOW_CENTER.add(focusObject.getPos().mul(space.getScale()).neg()));
     }
     
     

@@ -1,6 +1,6 @@
 package lunarquest;
 
-import ggf.Vector;
+import ggf.geom.Vector;
 import java.awt.Graphics;
 
 public class CircleObject extends TransformObject {

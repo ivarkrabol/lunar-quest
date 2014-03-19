@@ -1,6 +1,6 @@
 package lunarquest;
 
-import ggf.Vector;
+import ggf.geom.Vector;
 
 public interface FrameOfReference {
     public Vector getAbsPos();

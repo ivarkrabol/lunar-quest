@@ -3,7 +3,7 @@ package lunarquest;
 import ggf.GameClock;
 import ggf.GameInput;
 import ggf.GameStateManager;
-import ggf.Vector;
+import ggf.geom.Vector;
 import java.awt.Graphics;
 
 public class GravityObject extends TransformObject {
@@ -35,17 +35,17 @@ public class GravityObject extends TransformObject {
 
     @Override
     public void update(GameClock clock, GameStateManager gsm, GameInput input) {
-        setPos(getPos().add(vel.multiply(clock.sDeltaTime())));
+        setPos(getPos().add(vel.mul(clock.sDeltaTime())));
     }
     
     public void gravitateTowards(CelestialObject body, double deltaTime) {
         
         // Se serviett for utregning;
         
-        Vector thisToBody = body.getPos().subtract(getPos());
-        double distanceCubed = Math.pow(thisToBody.magnitude(), 3);
-        Vector acc = thisToBody.multiply(G * body.getMass() / distanceCubed);
-        setVel(getVel().add(acc.multiply(deltaTime)));
+        Vector thisToBody = body.getPos().sub(getPos());
+        double distanceCubed = Math.pow(thisToBody.size(), 3);
+        Vector acc = thisToBody.mul(G * body.getMass() / distanceCubed);
+        setVel(getVel().add(acc.mul(deltaTime)));
         
 //        double distanceSq = Math.pow(getPos().distance(body.getPos()), 2);
 //        double gravMagnitude = G*body.getMass()*getMass()/distanceSq;
@@ -54,11 +54,11 @@ public class GravityObject extends TransformObject {
     }
     
     public void attemptCircularOrbit(CelestialObject body) {
-        Vector thisToBody = body.getPos().subtract(getPos());
-        double distance = thisToBody.magnitude();
+        Vector thisToBody = body.getPos().sub(getPos());
+        double distance = thisToBody.size();
         double velocity = Math.sqrt(G*(body.getMass() + getMass()) / distance);
-        Vector direction = new Vector(thisToBody.y, -thisToBody.x).normalized();
-        setVel(direction.multiply(velocity));
+        Vector direction = new Vector(thisToBody.y, -thisToBody.x).unit();
+        setVel(direction.mul(velocity));
     }
 
 }

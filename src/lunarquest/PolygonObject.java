@@ -1,6 +1,6 @@
 package lunarquest;
 
-import ggf.Vector;
+import ggf.geom.Vector;
 import java.awt.Graphics;
 import java.util.Iterator;
 
@@ -83,7 +83,7 @@ public class PolygonObject extends TransformObject implements Iterator<Vector> {
     private Vector[] transformAbsolutePoints() {
         Vector[] absolutePoints = new Vector[num()];
         for(int i = 0; i < num(); i++) {
-            absolutePoints[i] = getAbsPos().add(points[i].rotate(getAbsRotation()).multiply(getAbsScale()));
+            absolutePoints[i] = getAbsPos().add(points[i].rot(getAbsRotation()).mul(getAbsScale()));
         }
         return absolutePoints;
     }

@@ -1,5 +1,6 @@
 package ggf;
 
+import ggf.geom.Vector;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -62,7 +63,7 @@ public class GameString extends GameObject {
         if(color != null && !graphics.getColor().equals(color)) graphics.setColor(color);
         if(font != null && !graphics.getFont().equals(font)) graphics.setFont(font);
         
-        graphics.drawString(string, (int)pos.x, (int)pos.y);
+        graphics.drawString(string, (int)getX(), (int)getY());
     }
     
     

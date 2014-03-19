@@ -1,22 +1,43 @@
 package ggf;
 
+import ggf.geom.Vector;
 import java.awt.Graphics;
-import javax.swing.JPanel;
 
 public class GameObject {
     
-    protected Vector pos;
+    private Vector pos;
     
     public GameObject(Vector pos) {
         this.pos = pos;
     }
 
     public Vector getPos() {
-        return pos;
+        return new Vector(pos);
     }
     
     public void setPos(Vector pos) {
         this.pos = pos;
+    }
+    
+    public void setPos(double x, double y) {
+        setX(x);
+        setY(y);
+    }
+
+    public double getX() {
+        return pos.getX();
+    }
+
+    public void setX(double x) {
+        pos.setX(x);
+    }
+
+    public double getY() {
+        return pos.getX();
+    }
+
+    public void setY(double y) {
+        pos.setY(y);
     }
     
     public void update(GameClock clock, GameStateManager gsm, GameInput input) { }

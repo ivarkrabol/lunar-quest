@@ -43,6 +43,11 @@ public abstract class GameGraphicsManager {
                 graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
                 draw(graphics2D);
             }
+            
+            @Override
+            public boolean isManagingFocus() {
+                return false;
+            }
         };
         jPanel.setDoubleBuffered(true);
         jPanel.setBackground(DEFAULT_BACKGROUND_COLOR);

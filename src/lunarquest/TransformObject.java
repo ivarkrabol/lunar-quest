@@ -1,7 +1,7 @@
 package lunarquest;
 
 import ggf.GameObject;
-import ggf.Vector;
+import ggf.geom.Vector;
 import java.awt.Color;
 
 public class TransformObject extends GameObject implements FrameOfReference{
@@ -78,8 +78,8 @@ public class TransformObject extends GameObject implements FrameOfReference{
 
     @Override
     public Vector getAbsPos() {
-        Vector rotatedPos = getPos().rotate(parent.getAbsRotation());
-        Vector scaledRotatedPos = rotatedPos.multiply(parent.getAbsScale());
+        Vector rotatedPos = getPos().rot(parent.getAbsRotation());
+        Vector scaledRotatedPos = rotatedPos.mul(parent.getAbsScale());
         return parent.getAbsPos().add(scaledRotatedPos);
     }
 

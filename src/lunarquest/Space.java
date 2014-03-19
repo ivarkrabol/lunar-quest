@@ -1,6 +1,6 @@
 package lunarquest;
 
-import ggf.Vector;
+import ggf.geom.Vector;
 
 public class Space extends TransformObject implements FrameOfReference {
 

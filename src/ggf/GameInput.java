@@ -1,12 +1,13 @@
 package ggf;
 
+import ggf.geom.Vector;
 import java.awt.MouseInfo;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 
 public class GameInput implements KeyListener, MouseListener {
     
@@ -15,9 +16,7 @@ public class GameInput implements KeyListener, MouseListener {
     private boolean[] mouseDown;
     private boolean[] mouseChanged;
     private Vector mousePos;
-    
-    private GameMouseArea[] mouseAreas;
-    private GameMouseArea dragMouseArea;
+    private ArrayList<GameDraggable> draggables;
     
     public GameInput() {
         keyDown = new boolean[525];
@@ -25,20 +24,14 @@ public class GameInput implements KeyListener, MouseListener {
         mouseDown = new boolean[3];
         mouseChanged = new boolean[3];
         mousePos = new Vector(MouseInfo.getPointerInfo().getLocation());
+        draggables = new ArrayList();
     }
     
-    public void setMouseAreas(Collection<GameMouseArea> mouseAreaCollection) {
-        mouseAreas = mouseAreaCollection.toArray(new GameMouseArea[0]);
-        dragMouseArea = null;
+    public void addDraggable(GameDraggable draggable) {
+        draggables.add(draggable);
     }
     
     public void update() {
-        Vector prevMousePos = new Vector(mousePos);
-        mousePos = new Vector(MouseInfo.getPointerInfo().getLocation());
-        if(dragMouseArea != null) {
-            dragMouseArea.drag(mousePos.subtract(prevMousePos));
-        }
-        
         Arrays.fill(keyChanged, false);
         Arrays.fill(mouseChanged, false);
     }
@@ -53,7 +46,7 @@ public class GameInput implements KeyListener, MouseListener {
     public void keyPressed(KeyEvent e) {
         keyDown[e.getKeyCode()] = true;
         keyChanged[e.getKeyCode()] = true;
-//        
+
 //        System.out.println(e.getKeyCode());
     }
 
@@ -91,15 +84,6 @@ public class GameInput implements KeyListener, MouseListener {
         if(mouseCode == -1) return;
         mouseDown[mouseCode] = true;
         mouseChanged[mouseCode] = true;
-        
-        if(mouseCode == 1) {
-            for(GameMouseArea mouseArea : mouseAreas) {
-                if(mousePos.isInside(mouseArea.getArea())) {
-                    dragMouseArea = mouseArea;
-                    break;
-                }
-            }
-        }
     }
 
     @Override
@@ -108,10 +92,6 @@ public class GameInput implements KeyListener, MouseListener {
         if(mouseCode == -1) return;
         mouseDown[mouseCode] = false;
         mouseChanged[mouseCode] = true;
-        
-        if(mouseCode == 1) {
-            dragMouseArea = null;
-        }
     }
     
     public boolean isMouseDown(int mouseCode) {
