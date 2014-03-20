@@ -46,11 +46,6 @@ public class GravityObject extends TransformObject {
         double distanceCubed = Math.pow(thisToBody.size(), 3);
         Vector acc = thisToBody.mul(G * body.getMass() / distanceCubed);
         setVel(getVel().add(acc.mul(deltaTime)));
-        
-//        double distanceSq = Math.pow(getPos().distance(body.getPos()), 2);
-//        double gravMagnitude = G*body.getMass()*getMass()/distanceSq;
-//        Vector gravForce = body.getPos().subtract(getPos()).normalized().multiply(gravMagnitude);
-//        setVel(getVel().add(gravForce.divide(getMass())));
     }
     
     public void attemptCircularOrbit(CelestialObject body) {
@@ -58,7 +53,7 @@ public class GravityObject extends TransformObject {
         double distance = thisToBody.size();
         double velocity = Math.sqrt(G*(body.getMass() + getMass()) / distance);
         Vector direction = new Vector(thisToBody.y, -thisToBody.x).unit();
-        setVel(direction.mul(velocity));
+        setVel(direction.mul(velocity).add(body.getVel()));
     }
 
 }
