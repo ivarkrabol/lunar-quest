@@ -6,9 +6,7 @@ import ggf.GameObject;
 import ggf.GameState;
 import ggf.GameStateManager;
 import ggf.geom.Vector;
-import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 public class FlyState extends GameState implements FrameOfReference {
@@ -20,7 +18,7 @@ public class FlyState extends GameState implements FrameOfReference {
     private ArrayList<GravityObject> gravityObjects;
     private Space space;
     private RocketObject rocket;
-    private boolean active;
+    private boolean paused;
     private int focusIndex;
     private GravityObject focusObject;
     
@@ -50,7 +48,7 @@ public class FlyState extends GameState implements FrameOfReference {
         gameObjects.add(rocket);
         
         clock.setTimeScale(1);
-        active = false;
+        paused = true;
         focusIndex = 0;
         focusObject = gravityObjects.get(focusIndex);
     }
@@ -64,19 +62,20 @@ public class FlyState extends GameState implements FrameOfReference {
 
     @Override
     public void update(GameClock clock, GameStateManager stateManager, GameInput input) {
-        if(input.isKeyDown(KeyEvent.VK_UP)) space.setScale(space.getScale()*Math.pow(1.1, clock.deltaTime()*0.01));
-        if(input.isKeyDown(KeyEvent.VK_DOWN)) space.setScale(space.getScale()*Math.pow(1.1, -clock.deltaTime()*0.01));
-        if(input.isKeyDown(KeyEvent.VK_PERIOD)) clock.setTimeScale(clock.getTimeScale()*Math.pow(1.1, clock.deltaTime()*0.01));
-        if(input.isKeyDown(KeyEvent.VK_COMMA)) clock.setTimeScale(clock.getTimeScale()*Math.pow(1.1, -clock.deltaTime()*0.01));
+        FlyInput flyInput = new FlyInput(input);
+        if(flyInput.zoomIn()) space.setScale(space.getScale()*Math.pow(1.1, clock.deltaTime()*0.01));
+        if(flyInput.zoomOut()) space.setScale(space.getScale()*Math.pow(1.1, -clock.deltaTime()*0.01));
+        if(flyInput.speedUp()) clock.setTimeScale(clock.getTimeScale()*Math.pow(1.1, clock.deltaTime()*0.01));
+        if(flyInput.slowDown()) clock.setTimeScale(clock.getTimeScale()*Math.pow(1.1, -clock.deltaTime()*0.01));
         
-        if(input.isKeyPressed(KeyEvent.VK_ENTER)) {
+        if(flyInput.switchFocus()) {
             if(++focusIndex >= gravityObjects.size()) focusIndex = 0;
             focusObject = gravityObjects.get(focusIndex);
         }
         
-        if(input.isKeyDown(KeyEvent.VK_SPACE)) active = true;
+        if(flyInput.togglePause()) paused = !paused;
         
-        if(active) {
+        if(!paused) {
             for(GravityObject object : gravityObjects) {
                 for(CelestialObject body : celestialObjects) {
                     if(object != body) object.gravitateTowards(body, clock.sDeltaTime());

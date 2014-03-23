@@ -1,5 +1,8 @@
 package lunarquest;
 
+import ggf.GameClock;
+import ggf.GameInput;
+import ggf.GameStateManager;
 import ggf.geom.Vector;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -27,6 +30,13 @@ public class RocketObject extends GravityObject {
     @Override
     public double getMass() {
         return 0.05;
+    }
+
+    @Override
+    public void update(GameClock clock, GameStateManager gsm, GameInput input) {
+        
+        
+        super.update(clock, gsm, input);
     }
 
     @Override
