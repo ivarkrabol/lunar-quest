@@ -13,16 +13,14 @@ public class RocketObject extends GravityObject {
         
         PolygonObject rocket = new PolygonObject(this, Vector.NULL, 0, 4);
         rocket.setFillColor(Color.WHITE);
-        rocket.setScale(3);
         rocket.setPoints(
                 new double[]{ 0.10, 0.00,-0.10, 0.00},
                 new double[]{ 0.25, 0.15, 0.25,-0.25});
         
-        CircleObject window = new CircleObject(this, Vector.NULL, 1);
+        CircleObject window = new CircleObject(this, new Vector(0, 0.07), 0.04);
         window.setFillColor(Color.DARK_GRAY);
-        window.setScale(rotation);
         
-        visualObjects = new TransformObject[]{window, rocket};
+        visualObjects = new TransformObject[]{rocket, window};
         
     }
     

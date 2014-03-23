@@ -42,6 +42,6 @@ public class GameObject {
     
     public void update(GameClock clock, GameStateManager gsm, GameInput input) { }
     
-    public void draw(Graphics graphics) { }
+    public void draw(Graphics graphics) {}
 
 }
