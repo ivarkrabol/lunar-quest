@@ -41,6 +41,7 @@ public class CelestialObject extends GravityObject {
 
     @Override
     public void draw(Graphics g) {
+        super.draw(g);
         visualObject.draw(g);
     }
 

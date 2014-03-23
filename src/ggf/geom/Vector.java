@@ -75,8 +75,15 @@ public class Vector extends Point2D.Double {
         return new Vector(Math.cos(angle() + radians), Math.sin(angle() + radians)).mul(size());
     }
     
+    public Vector toSize(double size) {
+        return new Vector(this).unit().mul(size);
+    }
     
     
+    
+    public static Vector directionVector(double direction) {
+        return new Vector(Math.cos(direction), Math.sin(direction));
+    }
     
     public static Vector rectPos(Rectangle2D rect) {
         return new Vector(rect.getX(), rect.getY());

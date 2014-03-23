@@ -12,6 +12,7 @@ public class EarthObject extends CelestialObject {
         super(parent, pos, Vector.NULL, 60000);
         setFillColor(LQConstants.COLOR_BLUE);
         defineVisualDetails();
+        getIcon().setFillColor(LQConstants.COLOR_BLUE);
     }
     
     private void defineVisualDetails() {

@@ -12,6 +12,7 @@ public class MoonObject extends CelestialObject {
         attemptCircularOrbit(orbits);
         setFillColor(LQConstants.COLOR_WHITEISH);
         defineVisualDetails();
+        getIcon().setFillColor(LQConstants.COLOR_WHITEISH);
     }
     
     private void defineVisualDetails() {

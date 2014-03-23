@@ -16,8 +16,8 @@ public class FlyInput {
     public static final int KEY_ROT_CCW = KeyEvent.VK_A;
     public static final int KEY_ZOOM_IN = KeyEvent.VK_UP;
     public static final int KEY_ZOOM_OUT = KeyEvent.VK_DOWN;
-    public static final int KEY_SPEED_UP = KeyEvent.VK_PERIOD;
-    public static final int KEY_SLOW_DOWN = KeyEvent.VK_COMMA;
+    public static final int KEY_SPEED_UP = KeyEvent.VK_RIGHT;
+    public static final int KEY_SLOW_DOWN = KeyEvent.VK_LEFT;
     public static final int KEY_FOCUS = KeyEvent.VK_ENTER;
     public static final int KEY_PAUSE = KeyEvent.VK_SPACE;
     

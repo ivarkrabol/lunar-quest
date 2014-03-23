@@ -4,6 +4,7 @@ import ggf.GameClock;
 import ggf.GameInput;
 import ggf.GameStateManager;
 import ggf.geom.Vector;
+import java.awt.Color;
 import java.awt.Graphics;
 
 public class GravityObject extends TransformObject {
@@ -11,10 +12,15 @@ public class GravityObject extends TransformObject {
     public static final double G = 0.0000000000667;
     
     private Vector vel;
+    private double maxRadius;
+    private TransformObject icon;
 
     public GravityObject(FrameOfReference parent, Vector pos, double rotation, Vector vel) {
         super(parent, pos, rotation);
         this.vel = vel;
+        maxRadius = 1;
+        icon = new CircleObject(this, Vector.NULL, 10);
+        icon.setFillColor(Color.WHITE);
     }
 
     public Vector getVel() {
@@ -24,13 +30,31 @@ public class GravityObject extends TransformObject {
     public void setVel(Vector vel) {
         this.vel = vel;
     }
+
+    public double getMaxRadius() {
+        return maxRadius;
+    }
+
+    public void setMaxRadius(double maxRadius) {
+        this.maxRadius = maxRadius;
+    }
+
+    public TransformObject getIcon() {
+        return icon;
+    }
+
+    public void setIcon(TransformObject icon) {
+        this.icon = icon;
+    }
     
     public double getMass() {
         return 1;
     }
 
     @Override
-    public void draw(Graphics graphics) {
+    public void draw(Graphics g) {
+        icon.setScale(1/getAbsScale());
+        icon.draw(g);
     }
 
     @Override
