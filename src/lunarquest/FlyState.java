@@ -21,6 +21,7 @@ public class FlyState extends GameState implements FrameOfReference {
     private boolean paused;
     private int focusIndex;
     private GravityObject focusObject;
+    private Hud hud;
     
     
     public FlyState(GameClock clock) {
@@ -51,6 +52,9 @@ public class FlyState extends GameState implements FrameOfReference {
         paused = true;
         focusIndex = 0;
         focusObject = gravityObjects.get(focusIndex);
+        
+        hud = new Hud(Vector.NULL, rocket);
+        gameObjects.add(hud);
     }
     
     @Override
