@@ -30,7 +30,7 @@ public class FlyState extends GameState implements FrameOfReference {
         gravityObjects = new ArrayList();
         
         space = new Space(this, WINDOW_CENTER);
-        space.setScale(0.0005);
+        space.setScale(1000);
         gameObjects.add(space);
         
         EarthObject earth = new EarthObject(space, Vector.NULL);
@@ -50,7 +50,7 @@ public class FlyState extends GameState implements FrameOfReference {
         
         clock.setTimeScale(1);
         paused = true;
-        focusIndex = 0;
+        focusIndex = 2;
         focusObject = gravityObjects.get(focusIndex);
         
         hud = new Hud(Vector.NULL, rocket);

@@ -1,7 +1,7 @@
 package ggf;
 
 import ggf.geom.Vector;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 public class GameObject {
     
@@ -42,6 +42,6 @@ public class GameObject {
     
     public void update(GameClock clock, GameStateManager gsm, GameInput input) { }
     
-    public void draw(Graphics graphics) {}
+    public void draw(Graphics2D g) {}
 
 }

@@ -1,7 +1,7 @@
 package lunarquest;
 
 import ggf.geom.Vector;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 public class MoonObject extends CelestialObject {
     
@@ -41,7 +41,7 @@ public class MoonObject extends CelestialObject {
     }
 
     @Override
-    public void draw(Graphics g) {
+    public void draw(Graphics2D g) {
         super.draw(g);
         for(TransformObject detail : visualDetails) {
             detail.draw(g);

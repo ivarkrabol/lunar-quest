@@ -5,17 +5,20 @@ import ggf.GameInput;
 import ggf.GameStateManager;
 import ggf.geom.Vector;
 import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 public class RocketObject extends GravityObject {
     
     public static final double THRUST = 0.0001;
     public static final double TORQUE = 0.001;
 
+    private PolygonObject boundingPolygon;
     private TransformObject[] drawObjects;
     
     public RocketObject(FrameOfReference parent, Vector pos, double rotation, Vector vel) {
         super(parent, pos, rotation, vel);
+        
+        PolygonObject boundingPolygon = new PolygonObject(this, Vector.NULL, 0, 4);
         
         PolygonObject rocket = new PolygonObject(this, Vector.NULL, Math.PI/2, 4);
         rocket.setFillColor(Color.WHITE);
@@ -38,7 +41,6 @@ public class RocketObject extends GravityObject {
         setIcon(icon);
         
         drawObjects = new TransformObject[]{rocketIcon, rocket, window};
-        
     }
     
     @Override
@@ -62,7 +64,7 @@ public class RocketObject extends GravityObject {
     }
 
     @Override
-    public void draw(Graphics g) {
+    public void draw(Graphics2D g) {
         super.draw(g);
         for(TransformObject detail : drawObjects) {
             detail.draw(g);

@@ -5,7 +5,7 @@ import ggf.GameInput;
 import ggf.GameStateManager;
 import ggf.geom.Vector;
 import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 public class GravityObject extends TransformObject {
     
@@ -52,7 +52,7 @@ public class GravityObject extends TransformObject {
     }
 
     @Override
-    public void draw(Graphics g) {
+    public void draw(Graphics2D g) {
         icon.setScale(1/getAbsScale());
         icon.draw(g);
     }

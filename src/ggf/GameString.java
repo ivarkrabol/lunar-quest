@@ -3,7 +3,7 @@ package ggf;
 import ggf.geom.Vector;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 public class GameString extends GameObject {
 
@@ -59,11 +59,11 @@ public class GameString extends GameObject {
     }
 
     @Override
-    public void draw(Graphics graphics) {
-        if(color != null && !graphics.getColor().equals(color)) graphics.setColor(color);
-        if(font != null && !graphics.getFont().equals(font)) graphics.setFont(font);
+    public void draw(Graphics2D g) {
+        if(color != null && !g.getColor().equals(color)) g.setColor(color);
+        if(font != null && !g.getFont().equals(font)) g.setFont(font);
         
-        graphics.drawString(string, (int)getX(), (int)getY());
+        g.drawString(string, (int)getX(), (int)getY());
     }
     
     

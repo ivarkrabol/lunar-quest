@@ -40,8 +40,8 @@ public class GameStateManager {
         currentState.update(clock, this, input);
     }
     
-    public final void draw(Graphics2D graphics) {
-        currentState.draw(graphics);
+    public final void draw(Graphics2D g) {
+        currentState.draw(g);
     }
     
 }

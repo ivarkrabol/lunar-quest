@@ -2,7 +2,7 @@ package lunarquest;
 
 import ggf.geom.Vector;
 import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
 public class RectangleObject extends TransformObject {
@@ -105,7 +105,7 @@ public class RectangleObject extends TransformObject {
     }
 
     @Override
-    public void draw(Graphics graphics) {
+    public void draw(Graphics2D graphics) {
         super.draw(graphics);
         polygon.draw(graphics);
     }

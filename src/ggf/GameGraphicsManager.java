@@ -39,9 +39,9 @@ public abstract class GameGraphicsManager {
             @Override
             public void paintComponent(Graphics graphics) {
                 super.paintComponent(graphics);
-                Graphics2D graphics2D = (Graphics2D)graphics;
-                graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                draw(graphics2D);
+                Graphics2D g = (Graphics2D)graphics;
+                g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                draw(g);
             }
             
             @Override

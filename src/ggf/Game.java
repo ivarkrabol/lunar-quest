@@ -24,8 +24,8 @@ public abstract class Game {
         setupStates(stateManager);
         graphicsManager = new GameGraphicsManager(windowTitle) {
             @Override
-            protected void draw(Graphics2D graphics2D) {
-                stateManager.draw(graphics2D);
+            protected void draw(Graphics2D g) {
+                stateManager.draw(g);
             }
         };
         setupGraphics(graphicsManager);

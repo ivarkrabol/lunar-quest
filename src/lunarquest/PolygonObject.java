@@ -1,7 +1,7 @@
 package lunarquest;
 
 import ggf.geom.Vector;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.util.Iterator;
 
 public class PolygonObject extends TransformObject implements Iterator<Vector> {
@@ -65,7 +65,7 @@ public class PolygonObject extends TransformObject implements Iterator<Vector> {
     }
 
     @Override
-    public void draw(Graphics g) {
+    public void draw(Graphics2D g) {
         if(!hasFill() && !hasEdge()) return;
         Vector[] absolutePoints = transformAbsolutePoints();
         int[] absoluteIntArrayX = convertToAbsoluteIntArrayX(absolutePoints);

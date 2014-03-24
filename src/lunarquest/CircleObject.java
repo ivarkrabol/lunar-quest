@@ -1,7 +1,7 @@
 package lunarquest;
 
 import ggf.geom.Vector;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 public class CircleObject extends TransformObject {
     
@@ -21,7 +21,7 @@ public class CircleObject extends TransformObject {
     }
 
     @Override
-    public void draw(Graphics g) {
+    public void draw(Graphics2D g) {
         if(!hasFill() && !hasEdge()) return;
         double absoluteRadius = radius*getAbsScale();
         if(hasFill()) {
