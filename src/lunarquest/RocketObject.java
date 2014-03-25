@@ -17,6 +17,8 @@ public class RocketObject extends GravityObject {
     
     public RocketObject(FrameOfReference parent, Vector pos, double rotation, Vector vel) {
         super(parent, pos, rotation, vel);
+        setMaxRadius(0.3);
+        getIcon().setFillColor(LQConstants.COLOR_RED);
         
         PolygonObject boundingPolygon = new PolygonObject(this, Vector.NULL, 0, 4);
         
@@ -27,20 +29,9 @@ public class RocketObject extends GravityObject {
                 new double[]{ 0.25, 0.15, 0.25,-0.25});
         
         CircleObject window = new CircleObject(this, new Vector(-0.07, 0), 0.04);
-        window.setFillColor(Color.DARK_GRAY);
+        window.setFillColor(LQConstants.COLOR_RED);
         
-        CircleObject icon = new CircleObject(this, Vector.NULL, 10);
-        icon.setFillColor(Color.LIGHT_GRAY);
-        PolygonObject rocketIcon = new PolygonObject(icon, Vector.NULL, 0, 3);
-        rocketIcon.setPoints(new Vector[]{
-                new Vector(1, 0),
-                new Vector(Math.cos(3*Math.PI/4), Math.sin(3*Math.PI/4)),
-                new Vector(Math.cos(5*Math.PI/4), Math.sin(5*Math.PI/4)),});
-        rocketIcon.setScale(icon.getRadius());
-        rocketIcon.setFillColor(Color.DARK_GRAY);
-        setIcon(icon);
-        
-        drawObjects = new TransformObject[]{rocketIcon, rocket, window};
+        drawObjects = new TransformObject[]{rocket, window};
     }
     
     @Override
@@ -64,8 +55,7 @@ public class RocketObject extends GravityObject {
     }
 
     @Override
-    public void draw(Graphics2D g) {
-        super.draw(g);
+    public void drawDetailed(Graphics2D g) {
         for(TransformObject detail : drawObjects) {
             detail.draw(g);
         }

@@ -19,7 +19,7 @@ public class GravityObject extends TransformObject {
         super(parent, pos, rotation);
         this.vel = vel;
         maxRadius = 1;
-        icon = new CircleObject(this, Vector.NULL, 10);
+        icon = new CircleObject(this, Vector.NULL, 6);
         icon.setFillColor(Color.WHITE);
     }
 
@@ -53,9 +53,28 @@ public class GravityObject extends TransformObject {
 
     @Override
     public void draw(Graphics2D g) {
+        
+        if(getMaxRadius()*getAbsScale() < 6) {
+            icon.setFillAlpha(255);
+            drawIcon(g);
+        } else if(getMaxRadius()*getAbsScale() < 10) {
+            drawDetailed(g);
+            
+            int iconAlpha = (int)(255*(10 - getMaxRadius()*getAbsScale())/4);
+            icon.setFillAlpha(iconAlpha);
+            drawIcon(g);
+        } else {
+            drawDetailed(g);
+        }
+        
+    }
+    
+    protected void drawIcon(Graphics2D g) {
         icon.setScale(1/getAbsScale());
         icon.draw(g);
     }
+    
+    protected void drawDetailed(Graphics2D g) { }
 
     @Override
     public void update(GameClock clock, GameStateManager gsm, GameInput input) {

@@ -12,6 +12,7 @@ public class CelestialObject extends GravityObject {
 
     public CelestialObject(FrameOfReference parent, Vector pos, Vector vel, double radius) {
         super(parent, pos, 0, vel);
+        setMaxRadius(radius);
         visualObject = new CircleObject(this, Vector.NULL, radius);
         
     }
@@ -40,8 +41,7 @@ public class CelestialObject extends GravityObject {
     }
 
     @Override
-    public void draw(Graphics2D g) {
-        super.draw(g);
+    public void drawDetailed(Graphics2D g) {
         visualObject.draw(g);
     }
 

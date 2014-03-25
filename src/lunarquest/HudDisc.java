@@ -3,7 +3,6 @@ package lunarquest;
 import ggf.geom.Vector;
 import java.awt.AlphaComposite;
 import java.awt.Color;
-import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.RenderingHints;
@@ -42,8 +41,17 @@ public class HudDisc extends TransformObject {
         disc.setFillColor(Color.DARK_GRAY);
         disc.draw(g2);
         marker.draw(g2);
+        
+        marker.setRotation(Math.PI);
+        Color c = marker.getFillColor();
+        marker.setFillColor(c.darker().darker());
+        marker.draw(g2);
+        
         g2.dispose();
         g.drawImage(img, 0, 0, null);
+        
+        marker.setRotation(0);
+        marker.setFillColor(c);
 
         // Copy our intermediate image 
         

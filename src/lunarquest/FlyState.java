@@ -53,7 +53,7 @@ public class FlyState extends GameState implements FrameOfReference {
         focusIndex = 2;
         focusObject = gravityObjects.get(focusIndex);
         
-        hud = new Hud(Vector.NULL, rocket);
+        hud = new Hud(Vector.NULL, rocket, moon, earth);
         gameObjects.add(hud);
     }
     

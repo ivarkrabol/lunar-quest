@@ -41,8 +41,8 @@ public class MoonObject extends CelestialObject {
     }
 
     @Override
-    public void draw(Graphics2D g) {
-        super.draw(g);
+    public void drawDetailed(Graphics2D g) {
+        super.drawDetailed(g);
         for(TransformObject detail : visualDetails) {
             detail.draw(g);
         }

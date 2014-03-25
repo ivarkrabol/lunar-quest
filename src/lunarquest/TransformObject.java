@@ -75,7 +75,12 @@ public class TransformObject extends GameObject implements FrameOfReference{
     public void setEdgeColor(Color edgeColor) {
         this.edgeColor = edgeColor;
     }
-
+    
+    public void setFillAlpha(int alpha) {
+        Color f = getFillColor();
+        setFillColor(new Color(f.getRed(), f.getGreen(), f.getBlue(), alpha));
+    }
+    
     @Override
     public Vector getAbsPos() {
         Vector rotatedPos = getPos().rot(parent.getAbsRotation());
