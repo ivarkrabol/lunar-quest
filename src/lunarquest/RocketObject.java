@@ -1,6 +1,6 @@
 package lunarquest;
 
-import ggf.GameClock;
+import ggf.GameTime;
 import ggf.GameInput;
 import ggf.GameStateManager;
 import ggf.geom.Vector;
@@ -40,7 +40,7 @@ public class RocketObject extends GravityObject {
     }
 
     @Override
-    public void update(GameClock clock, GameStateManager gsm, GameInput input) {
+    public void update(GameTime clock, GameStateManager gsm, GameInput input) {
         FlyInput flyInput = new FlyInput(input);
         
         if(flyInput.acc()) {

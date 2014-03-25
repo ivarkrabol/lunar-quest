@@ -1,14 +1,14 @@
 package lunarquest;
 
 import ggf.Game;
-import ggf.GameClock;
+import ggf.GameTime;
 import ggf.GameGraphicsManager;
 import ggf.GameStateManager;
 import java.awt.Color;
 
 public class LunarQuest extends Game {
     
-    private GameClock clock;
+    private GameTime clock;
 
     public LunarQuest() {
         init("Lunar Quest");
@@ -16,7 +16,7 @@ public class LunarQuest extends Game {
     }
     
     @Override
-    protected void setupClock(GameClock clock) {
+    protected void setupClock(GameTime clock) {
         this.clock = clock;
     }
     

@@ -1,6 +1,6 @@
 package lunarquest;
 
-import ggf.GameClock;
+import ggf.GameTime;
 import ggf.GameInput;
 import ggf.GameStateManager;
 import ggf.geom.Vector;
@@ -77,7 +77,7 @@ public class GravityObject extends TransformObject {
     protected void drawDetailed(Graphics2D g) { }
 
     @Override
-    public void update(GameClock clock, GameStateManager gsm, GameInput input) {
+    public void update(GameTime clock, GameStateManager gsm, GameInput input) {
         setPos(getPos().add(vel.mul(clock.sDeltaTime())));
     }
     

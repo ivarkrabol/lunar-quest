@@ -1,10 +1,10 @@
 package lunarquest;
 
-import ggf.GameObject;
+import ggf.UpdateObject;
 import ggf.geom.Vector;
 import java.awt.Color;
 
-public class TransformObject extends GameObject implements FrameOfReference{
+public class TransformObject extends UpdateObject implements FrameOfReference{
     
     public final Color DEFAULT_FILL_COLOR = Color.DARK_GRAY;
     public final Color DEFAULT_EDGE_COLOR = Color.BLACK;

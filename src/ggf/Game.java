@@ -6,7 +6,7 @@ public abstract class Game {
     
     private static final int DEFAULT_FPS = 60;
 
-    private GameClock clock;
+    private GameTime clock;
     private GameInput input;
     private GameStateManager stateManager;
     private GameGraphicsManager graphicsManager;
@@ -17,7 +17,7 @@ public abstract class Game {
     }
     
     protected void init(String windowTitle) {
-        clock = new GameClock(getFramesPerSecond());
+        clock = new GameTime(getFramesPerSecond());
         setupClock(clock);
         input = new GameInput();
         stateManager = new GameStateManager();
@@ -65,7 +65,7 @@ public abstract class Game {
         return framesPerSecond;
     }
     
-    protected void setupClock(GameClock clock) {}
+    protected void setupClock(GameTime clock) {}
     protected void setupStates(GameStateManager stateManager) {}
     protected void setupGraphics(GameGraphicsManager graphicsManager) {}
     

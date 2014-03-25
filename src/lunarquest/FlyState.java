@@ -1,8 +1,8 @@
 package lunarquest;
 
-import ggf.GameClock;
+import ggf.GameTime;
 import ggf.GameInput;
-import ggf.GameObject;
+import ggf.UpdateObject;
 import ggf.GameState;
 import ggf.GameStateManager;
 import ggf.geom.Vector;
@@ -13,7 +13,7 @@ public class FlyState extends GameState implements FrameOfReference {
     
     public static final Vector WINDOW_CENTER = new Vector(LQConstants.WINDOW_WIDTH/2, LQConstants.WINDOW_HEIGHT/2);
 
-    private ArrayList<GameObject> gameObjects;
+    private ArrayList<UpdateObject> gameObjects;
     private ArrayList<CelestialObject> celestialObjects;
     private ArrayList<GravityObject> gravityObjects;
     private Space space;
@@ -24,7 +24,7 @@ public class FlyState extends GameState implements FrameOfReference {
     private Hud hud;
     
     
-    public FlyState(GameClock clock) {
+    public FlyState(GameTime clock) {
         gameObjects = new ArrayList();
         celestialObjects = new ArrayList();
         gravityObjects = new ArrayList();
@@ -59,13 +59,13 @@ public class FlyState extends GameState implements FrameOfReference {
     
     @Override
     public void draw(Graphics2D g) {
-        for(GameObject gameObject : gameObjects) {
+        for(UpdateObject gameObject : gameObjects) {
             gameObject.draw(g);
         }
     }
 
     @Override
-    public void update(GameClock clock, GameStateManager stateManager, GameInput input) {
+    public void update(GameTime clock, GameStateManager stateManager, GameInput input) {
         FlyInput flyInput = new FlyInput(input);
         if(flyInput.zoomIn()) space.setScale(space.getScale()*Math.pow(1.1, clock.deltaTime()*0.01));
         if(flyInput.zoomOut()) space.setScale(space.getScale()*Math.pow(1.1, -clock.deltaTime()*0.01));
@@ -86,7 +86,7 @@ public class FlyState extends GameState implements FrameOfReference {
                 }
             }
 
-            for(GameObject gameObject : gameObjects) {
+            for(UpdateObject gameObject : gameObjects) {
                 gameObject.update(clock, stateManager, input);
             }
         }

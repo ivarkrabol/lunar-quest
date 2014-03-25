@@ -1,8 +1,8 @@
 package lunarquest;
 
-import ggf.GameClock;
+import ggf.GameTime;
 import ggf.GameInput;
-import ggf.GameObject;
+import ggf.UpdateObject;
 import ggf.GameStateManager;
 import ggf.geom.Vector;
 import java.awt.Color;
@@ -11,7 +11,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
-public class Hud extends GameObject {
+public class Hud extends UpdateObject {
 
     private static final Dimension screen = new Dimension(LQConstants.WINDOW_WIDTH, LQConstants.WINDOW_HEIGHT);
     private static final Point center = new Point(screen.width/2, screen.height/2);
@@ -55,7 +55,7 @@ public class Hud extends GameObject {
     }
 
     @Override
-    public void update(GameClock clock, GameStateManager gsm, GameInput input) {
+    public void update(GameTime clock, GameStateManager gsm, GameInput input) {
         super.update(clock, gsm, input);
         
         discRef.setRotation(-rocket.getRotation());

@@ -36,7 +36,7 @@ public class GameStateManager {
         setCurrentState(state);
     }
     
-    public final void update(GameClock clock, GameInput input) {
+    public final void update(GameTime clock, GameInput input) {
         currentState.update(clock, this, input);
     }
     

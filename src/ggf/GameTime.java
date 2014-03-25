@@ -1,6 +1,6 @@
 package ggf;
 
-public class GameClock {
+public class GameTime {
     
     public static final int NANOSEC_IN_MILLISEC = 1000000;
     public static final int MILLISEC_IN_SEC = 1000;
@@ -11,7 +11,7 @@ public class GameClock {
     private double frameTime;
     private double timeScale;
     
-    public GameClock(double framesPerSecond) {
+    public GameTime(double framesPerSecond) {
         startTime = (System.nanoTime()/NANOSEC_IN_MILLISEC);
         runTime = 0;
         frameTime = MILLISEC_IN_SEC/framesPerSecond;
