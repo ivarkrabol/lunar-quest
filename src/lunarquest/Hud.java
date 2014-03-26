@@ -1,9 +1,9 @@
 package lunarquest;
 
-import ggf.GameTime;
-import ggf.GameInput;
+import ggf.framework.GameTime;
+import ggf.framework.InputHandler;
 import ggf.UpdateObject;
-import ggf.GameStateManager;
+import ggf.framework.GameStateManager;
 import ggf.geom.Vector;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -55,7 +55,7 @@ public class Hud extends UpdateObject {
     }
 
     @Override
-    public void update(GameTime clock, GameStateManager gsm, GameInput input) {
+    public void update(GameTime clock, GameStateManager gsm, InputHandler input) {
         super.update(clock, gsm, input);
         
         discRef.setRotation(-rocket.getRotation());

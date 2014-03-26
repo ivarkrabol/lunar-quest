@@ -1,5 +1,6 @@
-package ggf;
+package ggf.framework;
 
+import ggf.GameState;
 import java.awt.Graphics2D;
 import java.util.HashMap;
 
@@ -36,7 +37,7 @@ public class GameStateManager {
         setCurrentState(state);
     }
     
-    public final void update(GameTime clock, GameInput input) {
+    public final void update(GameTime clock, InputHandler input) {
         currentState.update(clock, this, input);
     }
     

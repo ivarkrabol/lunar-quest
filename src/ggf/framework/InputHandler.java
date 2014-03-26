@@ -1,4 +1,4 @@
-package ggf;
+package ggf.framework;
 
 import ggf.geom.Vector;
 import java.awt.MouseInfo;
@@ -9,16 +9,16 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class GameInput implements KeyListener, MouseListener {
+public class InputHandler implements KeyListener, MouseListener {
     
     private boolean[] keyDown;
     private boolean[] keyChanged;
     private boolean[] mouseDown;
     private boolean[] mouseChanged;
     private Vector mousePos;
-    private ArrayList<GameDraggable> draggables;
+    private ArrayList<Draggable> draggables;
     
-    public GameInput() {
+    public InputHandler() {
         keyDown = new boolean[525];
         keyChanged = new boolean[525];
         mouseDown = new boolean[3];
@@ -27,7 +27,7 @@ public class GameInput implements KeyListener, MouseListener {
         draggables = new ArrayList();
     }
     
-    public void addDraggable(GameDraggable draggable) {
+    public void addDraggable(Draggable draggable) {
         draggables.add(draggable);
     }
     

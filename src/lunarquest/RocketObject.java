@@ -1,13 +1,14 @@
 package lunarquest;
 
-import ggf.GameTime;
-import ggf.GameInput;
-import ggf.GameStateManager;
+import ggf.physics.RigidBody;
+import ggf.framework.GameTime;
+import ggf.framework.InputHandler;
+import ggf.framework.GameStateManager;
 import ggf.geom.Vector;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-public class RocketObject extends GravityObject {
+public class RocketObject extends RigidBody {
     
     public static final double THRUST = 0.0001;
     public static final double TORQUE = 0.001;
@@ -40,7 +41,7 @@ public class RocketObject extends GravityObject {
     }
 
     @Override
-    public void update(GameTime clock, GameStateManager gsm, GameInput input) {
+    public void update(GameTime clock, GameStateManager gsm, InputHandler input) {
         FlyInput flyInput = new FlyInput(input);
         
         if(flyInput.acc()) {

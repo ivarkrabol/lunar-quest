@@ -1,10 +1,11 @@
 package lunarquest;
 
+import ggf.physics.RigidBody;
 import ggf.geom.Vector;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-public class CelestialObject extends GravityObject {
+public class CelestialObject extends RigidBody {
     
     public static final double DENSITY_CONSTANT = 19000.0;
     

@@ -1,15 +1,21 @@
 package ggf;
 
+import ggf.framework.GraphicsManager;
+import ggf.framework.GameStateManager;
+import ggf.framework.InputHandler;
+import ggf.framework.GameTime;
+import ggf.framework.Controls;
 import java.awt.Graphics2D;
 
 public abstract class Game {
     
     private static final int DEFAULT_FPS = 60;
 
-    private GameTime clock;
-    private GameInput input;
-    private GameStateManager stateManager;
-    private GameGraphicsManager graphicsManager;
+    private GameTime time;
+    private InputHandler input;
+    private Controls controls;
+    private GameStateManager stateMgr;
+    private GraphicsManager graphicsMgr;
     private int framesPerSecond;
     
     protected Game() {
@@ -17,20 +23,29 @@ public abstract class Game {
     }
     
     protected void init(String windowTitle) {
-        clock = new GameTime(getFramesPerSecond());
-        setupClock(clock);
-        input = new GameInput();
-        stateManager = new GameStateManager();
-        setupStates(stateManager);
-        graphicsManager = new GameGraphicsManager(windowTitle) {
+        time = new GameTime(getFramesPerSecond());
+        setupTime(time);
+        
+        input = new InputHandler();
+        controls = new Controls(input);
+        setupControls(input);
+        
+        stateMgr = new GameStateManager();
+        setupStates(stateMgr);
+        
+        graphicsMgr = new GraphicsManager(windowTitle) {
             @Override
             protected void draw(Graphics2D g) {
-                stateManager.draw(g);
+                stateMgr.draw(g);
+            }
+            
+            @Override
+            protected void init() {
+                graphicsMgr.addInputListeners(input, input);
             }
         };
-        setupGraphics(graphicsManager);
-        graphicsManager.addInputListeners(input, input);
-        graphicsManager.init();
+        setupGraphics(graphicsMgr);
+        
     }
     
     protected void start() {
@@ -39,7 +54,7 @@ public abstract class Game {
             update();
             repaint();
             
-            int timeLeft = (int)clock.frameTimeLeft();
+            int timeLeft = (int)time.frameTimeLeft();
             if (timeLeft < 10) timeLeft = 10;
             try {
                 Thread.sleep(timeLeft);
@@ -48,13 +63,13 @@ public abstract class Game {
     }
     
     private void update() {
-        clock.update();
-        stateManager.update(clock, input);
+        time.update();
+        stateMgr.update(time, input);
         input.update();
     }
     
     private void repaint() {
-        graphicsManager.repaint();
+        graphicsMgr.repaint();
     }
     
     protected void setFramesPerSecond(int framesPerSecond) {
@@ -65,8 +80,9 @@ public abstract class Game {
         return framesPerSecond;
     }
     
-    protected void setupClock(GameTime clock) {}
+    protected void setupTime(GameTime clock) {}
+    protected void setupControls(InputHandler input) {}
     protected void setupStates(GameStateManager stateManager) {}
-    protected void setupGraphics(GameGraphicsManager graphicsManager) {}
+    protected void setupGraphics(GraphicsManager graphicsManager) {}
     
 }

@@ -1,12 +1,12 @@
 package lunarquest;
 
-import ggf.GameInput;
+import ggf.framework.InputHandler;
 
 public class FlyInput {
     
-    private GameInput input;
+    private InputHandler input;
     
-    public FlyInput(GameInput input) {
+    public FlyInput(InputHandler input) {
         this.input = input;
     }
     

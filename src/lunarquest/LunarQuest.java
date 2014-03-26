@@ -1,9 +1,9 @@
 package lunarquest;
 
 import ggf.Game;
-import ggf.GameTime;
-import ggf.GameGraphicsManager;
-import ggf.GameStateManager;
+import ggf.framework.GameTime;
+import ggf.framework.GraphicsManager;
+import ggf.framework.GameStateManager;
 import java.awt.Color;
 
 public class LunarQuest extends Game {
@@ -16,12 +16,12 @@ public class LunarQuest extends Game {
     }
     
     @Override
-    protected void setupClock(GameTime clock) {
+    protected void setupTime(GameTime clock) {
         this.clock = clock;
     }
     
     @Override
-    protected void setupGraphics(GameGraphicsManager graphicsManager) {
+    protected void setupGraphics(GraphicsManager graphicsManager) {
         graphicsManager.setWindowSize(LQConstants.WINDOW_WIDTH, LQConstants.WINDOW_HEIGHT);
         graphicsManager.setBackgroundColor(Color.BLACK);
     }

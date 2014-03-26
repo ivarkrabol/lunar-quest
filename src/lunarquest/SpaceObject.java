@@ -1,54 +1,22 @@
 package lunarquest;
 
-import ggf.GameTime;
-import ggf.GameInput;
-import ggf.GameStateManager;
+import ggf.ShapeObject;
+import ggf.TransformObject;
 import ggf.geom.Vector;
+import ggf.physics.RigidBody;
+import static ggf.physics.RigidBody.G;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-public class GravityObject extends TransformObject {
+public class SpaceObject extends RigidBody {
     
-    public static final double G = 0.0000000000667;
-    
-    private Vector vel;
     private double maxRadius;
-    private TransformObject icon;
+    private ShapeObject icon;
 
-    public GravityObject(FrameOfReference parent, Vector pos, double rotation, Vector vel) {
-        super(parent, pos, rotation);
-        this.vel = vel;
-        maxRadius = 1;
+    public SpaceObject(TransformObject parent, Vector pos) {
+        super(parent, pos);
         icon = new CircleObject(this, Vector.NULL, 6);
         icon.setFillColor(Color.WHITE);
-    }
-
-    public Vector getVel() {
-        return vel;
-    }
-
-    public void setVel(Vector vel) {
-        this.vel = vel;
-    }
-
-    public double getMaxRadius() {
-        return maxRadius;
-    }
-
-    public void setMaxRadius(double maxRadius) {
-        this.maxRadius = maxRadius;
-    }
-
-    public TransformObject getIcon() {
-        return icon;
-    }
-
-    public void setIcon(TransformObject icon) {
-        this.icon = icon;
-    }
-    
-    public double getMass() {
-        return 1;
     }
 
     @Override
@@ -75,11 +43,6 @@ public class GravityObject extends TransformObject {
     }
     
     protected void drawDetailed(Graphics2D g) { }
-
-    @Override
-    public void update(GameTime clock, GameStateManager gsm, GameInput input) {
-        setPos(getPos().add(vel.mul(clock.sDeltaTime())));
-    }
     
     public void gravitateTowards(CelestialObject body, double deltaTime) {
         
@@ -98,5 +61,6 @@ public class GravityObject extends TransformObject {
         Vector direction = new Vector(thisToBody.y, -thisToBody.x).unit();
         setVel(direction.mul(velocity).add(body.getVel()));
     }
-
+    
+    
 }

@@ -1,4 +1,4 @@
-package ggf;
+package ggf.framework;
 
 public class GameTime {
     

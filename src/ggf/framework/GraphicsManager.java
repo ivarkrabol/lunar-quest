@@ -1,4 +1,4 @@
-package ggf;
+package ggf.framework;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -12,7 +12,7 @@ import java.awt.event.MouseListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public abstract class GameGraphicsManager {
+public abstract class GraphicsManager {
     
     public static final int DEFAULT_WINDOW_WIDTH = 1024;
     public static final int DEFAULT_WINDOW_HEIGHT = 768;
@@ -24,7 +24,7 @@ public abstract class GameGraphicsManager {
     private JPanel jPanel;
     private JFrame jFrame;
     
-    public GameGraphicsManager(String windowTitle) {
+    public GraphicsManager(String windowTitle) {
         this.windowTitle = windowTitle;
         
         windowWidth = DEFAULT_WINDOW_WIDTH;
@@ -56,15 +56,16 @@ public abstract class GameGraphicsManager {
         jFrame.setResizable(false);
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jFrame.add(jPanel);
-    }
-    
-    public void init() {
+        
+        init();
+        
         jFrame.pack();
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Point center = new Point(screenSize.width / 2, screenSize.height / 2);
         Point newLocation = new Point(center.x - (jFrame.getWidth() / 2), center.y - (jFrame.getHeight() / 2));
         jFrame.setLocation(newLocation);
         jFrame.setVisible(true);
+        
     }
     
     public void repaint() {
@@ -86,5 +87,6 @@ public abstract class GameGraphicsManager {
     }
     
     protected abstract void draw(Graphics2D g);
+    protected abstract void init();
 
 }

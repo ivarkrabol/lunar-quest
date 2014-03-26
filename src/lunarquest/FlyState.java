@@ -1,10 +1,11 @@
 package lunarquest;
 
-import ggf.GameTime;
-import ggf.GameInput;
+import ggf.physics.RigidBody;
+import ggf.framework.GameTime;
+import ggf.framework.InputHandler;
 import ggf.UpdateObject;
 import ggf.GameState;
-import ggf.GameStateManager;
+import ggf.framework.GameStateManager;
 import ggf.geom.Vector;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
@@ -15,12 +16,12 @@ public class FlyState extends GameState implements FrameOfReference {
 
     private ArrayList<UpdateObject> gameObjects;
     private ArrayList<CelestialObject> celestialObjects;
-    private ArrayList<GravityObject> gravityObjects;
+    private ArrayList<RigidBody> gravityObjects;
     private Space space;
     private RocketObject rocket;
     private boolean paused;
     private int focusIndex;
-    private GravityObject focusObject;
+    private RigidBody focusObject;
     private Hud hud;
     
     
@@ -65,7 +66,7 @@ public class FlyState extends GameState implements FrameOfReference {
     }
 
     @Override
-    public void update(GameTime clock, GameStateManager stateManager, GameInput input) {
+    public void update(GameTime clock, GameStateManager stateManager, InputHandler input) {
         FlyInput flyInput = new FlyInput(input);
         if(flyInput.zoomIn()) space.setScale(space.getScale()*Math.pow(1.1, clock.deltaTime()*0.01));
         if(flyInput.zoomOut()) space.setScale(space.getScale()*Math.pow(1.1, -clock.deltaTime()*0.01));
@@ -80,7 +81,7 @@ public class FlyState extends GameState implements FrameOfReference {
         if(flyInput.togglePause()) paused = !paused;
         
         if(!paused) {
-            for(GravityObject object : gravityObjects) {
+            for(RigidBody object : gravityObjects) {
                 for(CelestialObject body : celestialObjects) {
                     if(object != body) object.gravitateTowards(body, clock.sDeltaTime());
                 }
