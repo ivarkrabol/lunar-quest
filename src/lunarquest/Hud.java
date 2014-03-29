@@ -78,7 +78,7 @@ public class Hud extends GameObject {
         g.setColor(LQConstants.COLOR_RED);
         g.fillPolygon(
                 new int[]{center.x ,center.x+10, center.x-10}, 
-                new int[]{screen.height-39, screen.height-24, screen.height-24},
+                new int[]{screen.height-39, screen.height-25, screen.height-25},
                 3);
     }
     
