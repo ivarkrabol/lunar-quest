@@ -1,21 +1,23 @@
-package lunarquest;
+package lunarquest.flystate;
 
 import ggf.Parent;
 import ggf.physics.RigidBody;
 import ggf.geom.Vector;
 import ggf.physics.CollisionPolygon;
 import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
+import lunarquest.CircleObject;
 
 public class CelestialObject extends SpaceObject {
     
     public static final double DENSITY_CONSTANT = 19000.0;
     
-    private CircleObject visualObject;
+    private CircleObject circle;
 
     public CelestialObject(Parent parent, Vector pos, double radius) {
         super(parent, pos);
-        visualObject = new CircleObject(this, radius);
+        circle = new CircleObject(this, radius);
     }
     
     @Override
@@ -24,21 +26,21 @@ public class CelestialObject extends SpaceObject {
     }
     
     public double getRadius() {
-        return visualObject.getRadius();
+        return circle.getRadius();
     }
     
     public void setRadius(double radius) {
-        visualObject.setRadius(radius);
+        circle.setRadius(radius);
     }
     
     @Override
     public Color getFill() {
-        return visualObject.getFill();
+        return circle.getFill();
     }
     
     @Override
     public void setFill(Color color) {
-        visualObject.setFill(color);
+        circle.setFill(color);
     }
 
     @Override
@@ -68,6 +70,11 @@ public class CelestialObject extends SpaceObject {
         }
         
         return super.collision(otherBody);
+    }
+
+    @Override
+    protected void drawDetailed(Graphics2D g) {
+        circle.draw(g);
     }
     
 }

@@ -1,4 +1,4 @@
-package lunarquest;
+package lunarquest.flystate;
 
 import ggf.Parent;
 import ggf.ShapeObject;
@@ -10,6 +10,9 @@ import java.awt.GraphicsConfiguration;
 import java.awt.RenderingHints;
 import java.awt.Transparency;
 import java.awt.image.BufferedImage;
+import lunarquest.CircleObject;
+import lunarquest.LQConstants;
+import lunarquest.PolygonObject;
 
 public class HudDisc extends ShapeObject {
     
@@ -54,25 +57,23 @@ public class HudDisc extends ShapeObject {
         
         marker.setRot(0);
         marker.setFill(c);
-
-        // Copy our intermediate image 
         
     }
     
     private BufferedImage prepareImage(Graphics2D g) {
-        int side = 2*(int)disc.getRadius();
+        int diam = 2*(int)disc.getRadius();
         GraphicsConfiguration gc = g.getDeviceConfiguration();
         return gc.createCompatibleImage(LQConstants.WINDOW_WIDTH, LQConstants.WINDOW_HEIGHT, Transparency.TRANSLUCENT);
     }
     
     private Graphics2D setupClip(BufferedImage img) {
-        int side = 2*(int)disc.getRadius();
+        int diam = 2*(int)disc.getRadius();
         int innerR = (int)disc.getRadius() - 1;
         
         Graphics2D g2 = img.createGraphics();
 
         g2.setComposite(AlphaComposite.Clear);
-        g2.fillRect(0, 0, side, side);
+        g2.fillRect(0, 0, diam, diam);
         g2.setComposite(AlphaComposite.Src);
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setColor(Color.WHITE);

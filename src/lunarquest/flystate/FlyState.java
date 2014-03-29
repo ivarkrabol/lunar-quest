@@ -1,4 +1,4 @@
-package lunarquest;
+package lunarquest.flystate;
 
 import ggf.physics.RigidBody;
 import ggf.framework.GameTime;
@@ -11,6 +11,7 @@ import ggf.geom.Vector;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
+import lunarquest.LQConstants;
 
 public class FlyState extends GameState {
     
@@ -34,6 +35,8 @@ public class FlyState extends GameState {
         gravityObjects = new ArrayList();
         
         space = new TransformObject();
+        space.setPos(WINDOW_CENTER);
+        space.setScale(1000);
         
         EarthObject earth = new EarthObject(space, Vector.NULL);
         celestialObjects.add(earth);

@@ -1,4 +1,4 @@
-package lunarquest;
+package lunarquest.flystate;
 
 import ggf.GameObject;
 import ggf.TransformObject;
@@ -11,6 +11,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import lunarquest.LQConstants;
 
 public class Hud extends TransformObject implements GameObject {
 
@@ -31,6 +32,7 @@ public class Hud extends TransformObject implements GameObject {
         this.earth = earth;
         
         discRef = new TransformObject();
+        discRef.setPos(new Vector(center.getX(), screen.getHeight()-25));
         
         velDisc = new HudDisc(discRef, 70, LQConstants.COLOR_GREEN);
         moonDisc = new HudDisc(discRef, 55, LQConstants.COLOR_WHITEISH);

@@ -18,6 +18,7 @@ public class RigidBody extends ShapeObject {
 
     public RigidBody(Parent parent, Vector pos) {
         super(parent);
+        setPos(pos);
         setVel(Vector.NULL);
         setMass(1);
     }

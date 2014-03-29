@@ -1,9 +1,12 @@
-package lunarquest;
+package lunarquest.flystate;
 
 import ggf.ShapeObject;
 import ggf.Parent;
 import ggf.geom.Vector;
 import java.awt.Color;
+import java.awt.Graphics2D;
+import lunarquest.LQConstants;
+import lunarquest.PolygonObject;
 
 public class EarthObject extends CelestialObject {
     
@@ -50,6 +53,14 @@ public class EarthObject extends CelestialObject {
             eurasiaGreen,
             eurasiaBeige,
         };
+    }
+
+    @Override
+    protected void drawDetailed(Graphics2D g) {
+        super.drawDetailed(g);
+        for(ShapeObject visualDetail : visualDetails) {
+            visualDetail.draw(g);
+        }
     }
     
 }

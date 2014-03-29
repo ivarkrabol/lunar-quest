@@ -1,4 +1,4 @@
-package lunarquest;
+package lunarquest.flystate;
 
 import ggf.ShapeObject;
 import ggf.Parent;
@@ -7,6 +7,7 @@ import ggf.physics.RigidBody;
 import static ggf.physics.RigidBody.G;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import lunarquest.CircleObject;
 
 public class SpaceObject extends RigidBody {
     
@@ -19,7 +20,7 @@ public class SpaceObject extends RigidBody {
     }
 
     @Override
-    public void draw(Graphics2D g) {
+    public final void draw(Graphics2D g) {
         
         if(false) { //TODO: Draw icon condition
             icon.setAlpha(255);

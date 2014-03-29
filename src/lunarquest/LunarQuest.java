@@ -1,5 +1,6 @@
 package lunarquest;
 
+import lunarquest.flystate.FlyState;
 import ggf.Game;
 import ggf.framework.GameTime;
 import ggf.framework.GraphicsManager;

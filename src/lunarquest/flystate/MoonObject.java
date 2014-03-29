@@ -1,8 +1,11 @@
-package lunarquest;
+package lunarquest.flystate;
 
 import ggf.ShapeObject;
 import ggf.Parent;
 import ggf.geom.Vector;
+import java.awt.Graphics2D;
+import lunarquest.CircleObject;
+import lunarquest.LQConstants;
 
 public class MoonObject extends CelestialObject {
     
@@ -38,6 +41,14 @@ public class MoonObject extends CelestialObject {
             crater3,
             crater4
         };
+    }
+
+    @Override
+    protected void drawDetailed(Graphics2D g) {
+        super.drawDetailed(g);
+        for(ShapeObject visualDetail : visualDetails) {
+            visualDetail.draw(g);
+        }
     }
 
 }

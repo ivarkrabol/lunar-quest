@@ -81,9 +81,7 @@ public class ShapeObject extends TransformObject implements GameObject {
     @Override
     public AffineTransform getTransform() {
         AffineTransform parentTx = getParent().getTransform();
-        parentTx.translate(getPos().getX(), getPos().getY());
-        parentTx.rotate(getRot());
-        parentTx.scale(getScale(), getScale());
+        parentTx.concatenate(super.getTransform());
         return new AffineTransform(parentTx);
     }
 

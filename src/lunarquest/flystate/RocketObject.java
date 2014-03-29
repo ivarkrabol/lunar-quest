@@ -1,4 +1,4 @@
-package lunarquest;
+package lunarquest.flystate;
 
 import ggf.ShapeObject;
 import ggf.Parent;
@@ -8,6 +8,10 @@ import ggf.framework.GameTime;
 import ggf.framework.GameStateManager;
 import ggf.geom.Vector;
 import java.awt.Color;
+import java.awt.Graphics2D;
+import lunarquest.CircleObject;
+import lunarquest.LQConstants;
+import lunarquest.PolygonObject;
 
 public class RocketObject extends SpaceObject {
     
@@ -44,11 +48,17 @@ public class RocketObject extends SpaceObject {
             double deltaVelocity = THRUST*time.sDeltaTime()/getMass();
             setVel(getVel().add(directionVector.toSize(deltaVelocity)));
         }
-        if(controls.ok("rot_cw")) setRot(getRot() + TORQUE);
-        if(controls.ok("rot_cw")) setRot(getRot() + TORQUE);
-        if(controls.ok("rot_ccw")) setRot(getRot() - TORQUE); 
+        if(controls.ok("rot_cw")) setRot(getRot() + TORQUE*time.deltaTime());
+        if(controls.ok("rot_ccw")) setRot(getRot() - TORQUE*time.deltaTime()); 
         
         super.update(time, stateMgr, controls);
+    }
+
+    @Override
+    protected void drawDetailed(Graphics2D g) {
+        for(ShapeObject drawObject : drawObjects) {
+            drawObject.draw(g);
+        }
     }
     
 }
