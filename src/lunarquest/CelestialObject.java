@@ -1,21 +1,21 @@
 package lunarquest;
 
+import ggf.Parent;
 import ggf.physics.RigidBody;
 import ggf.geom.Vector;
+import ggf.physics.CollisionPolygon;
 import java.awt.Color;
-import java.awt.Graphics2D;
+import java.awt.geom.Path2D;
 
-public class CelestialObject extends RigidBody {
+public class CelestialObject extends SpaceObject {
     
     public static final double DENSITY_CONSTANT = 19000.0;
     
     private CircleObject visualObject;
 
-    public CelestialObject(FrameOfReference parent, Vector pos, Vector vel, double radius) {
-        super(parent, pos, 0, vel);
-        setMaxRadius(radius);
-        visualObject = new CircleObject(this, Vector.NULL, radius);
-        
+    public CelestialObject(Parent parent, Vector pos, double radius) {
+        super(parent, pos);
+        visualObject = new CircleObject(this, radius);
     }
     
     @Override
@@ -32,18 +32,42 @@ public class CelestialObject extends RigidBody {
     }
     
     @Override
-    public Color getFillColor() {
-        return visualObject.getFillColor();
+    public Color getFill() {
+        return visualObject.getFill();
     }
     
     @Override
-    public void setFillColor(Color color) {
-        visualObject.setFillColor(color);
+    public void setFill(Color color) {
+        visualObject.setFill(color);
     }
 
     @Override
-    public void drawDetailed(Graphics2D g) {
-        visualObject.draw(g);
+    public double[][] requestCollisionPoints(RigidBody initiator) {
+        Vector flatMiddle = initiator.getPos().sub(getPos()).toSize(getRadius());
+        Vector lowMiddle = flatMiddle.toSize(getRadius() - 1);
+        Vector flatRight = flatMiddle.add(flatMiddle.rot(Math.PI/2).toSize(initiator.getBigRadius()));
+        Vector flatLeft = flatMiddle.mul(2).sub(flatRight);
+        
+        Path2D.Double collisionPath = new Path2D.Double();
+        collisionPath.moveTo(lowMiddle.getX(), lowMiddle.getY());
+        collisionPath.lineTo(flatRight.getX(), flatRight.getY());
+        collisionPath.lineTo(flatLeft.getX(), flatLeft.getY());
+        collisionPath.closePath();
+        
+        CollisionPolygon collisionPolygon = new CollisionPolygon(collisionPath);
+        
+        return collisionPolygon.getPoints();
     }
 
+    @Override
+    public boolean collision(RigidBody otherBody) {
+        
+        if(otherBody instanceof CelestialObject) {
+            CelestialObject otherCB = (CelestialObject)otherBody;
+            return getPos().distance(otherCB.getPos()) < getRadius()+otherCB.getRadius();
+        }
+        
+        return super.collision(otherBody);
+    }
+    
 }

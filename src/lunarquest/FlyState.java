@@ -2,22 +2,25 @@ package lunarquest;
 
 import ggf.physics.RigidBody;
 import ggf.framework.GameTime;
-import ggf.framework.InputHandler;
-import ggf.UpdateObject;
+import ggf.GameObject;
 import ggf.GameState;
+import ggf.TransformObject;
+import ggf.framework.Controls;
 import ggf.framework.GameStateManager;
 import ggf.geom.Vector;
 import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 
-public class FlyState extends GameState implements FrameOfReference {
+public class FlyState extends GameState {
     
     public static final Vector WINDOW_CENTER = new Vector(LQConstants.WINDOW_WIDTH/2, LQConstants.WINDOW_HEIGHT/2);
 
-    private ArrayList<UpdateObject> gameObjects;
+    private ArrayList<GameObject> gameObjects;
     private ArrayList<CelestialObject> celestialObjects;
-    private ArrayList<RigidBody> gravityObjects;
-    private Space space;
+    private ArrayList<SpaceObject> gravityObjects;
+    private TransformObject space;
+    private AffineTransform spaceTransform;
     private RocketObject rocket;
     private boolean paused;
     private int focusIndex;
@@ -30,9 +33,7 @@ public class FlyState extends GameState implements FrameOfReference {
         celestialObjects = new ArrayList();
         gravityObjects = new ArrayList();
         
-        space = new Space(this, WINDOW_CENTER);
-        space.setScale(1000);
-        gameObjects.add(space);
+        space = new TransformObject();
         
         EarthObject earth = new EarthObject(space, Vector.NULL);
         celestialObjects.add(earth);
@@ -44,12 +45,11 @@ public class FlyState extends GameState implements FrameOfReference {
         gravityObjects.add(moon);
         gameObjects.add(moon);
         
-        rocket = new RocketObject(space, new Vector(3970000, 0), 0, Vector.NULL);
+        rocket = new RocketObject(space, new Vector(3970000, 0));
         rocket.attemptCircularOrbit(moon);
         gravityObjects.add(rocket);
         gameObjects.add(rocket);
         
-        clock.setTimeScale(1);
         paused = true;
         focusIndex = 2;
         focusObject = gravityObjects.get(focusIndex);
@@ -60,59 +60,38 @@ public class FlyState extends GameState implements FrameOfReference {
     
     @Override
     public void draw(Graphics2D g) {
-        for(UpdateObject gameObject : gameObjects) {
+        for(GameObject gameObject : gameObjects) {
             gameObject.draw(g);
         }
     }
 
     @Override
-    public void update(GameTime clock, GameStateManager stateManager, InputHandler input) {
-        FlyInput flyInput = new FlyInput(input);
-        if(flyInput.zoomIn()) space.setScale(space.getScale()*Math.pow(1.1, clock.deltaTime()*0.01));
-        if(flyInput.zoomOut()) space.setScale(space.getScale()*Math.pow(1.1, -clock.deltaTime()*0.01));
-        if(flyInput.speedUp()) clock.setTimeScale(clock.getTimeScale()*Math.pow(1.1, clock.deltaTime()*0.01));
-        if(flyInput.slowDown()) clock.setTimeScale(clock.getTimeScale()*Math.pow(1.1, -clock.deltaTime()*0.01));
+    public void update(GameTime time, GameStateManager stateMgr, Controls controls) {
+        if(controls.ok("zoom_in")) space.setScale(space.getScale()*Math.pow(1.1, time.deltaTime()*0.01));
+        if(controls.ok("zoom_out")) space.setScale(space.getScale()*Math.pow(1.1, -time.deltaTime()*0.01));
+        if(controls.ok("speed_up")) time.setTimeScale(time.getTimeScale()*Math.pow(1.1, time.deltaTime()*0.01));
+        if(controls.ok("slow_down")) time.setTimeScale(time.getTimeScale()*Math.pow(1.1, -time.deltaTime()*0.01));
         
-        if(flyInput.switchFocus()) {
+        if(controls.ok("focus")) {
             if(++focusIndex >= gravityObjects.size()) focusIndex = 0;
             focusObject = gravityObjects.get(focusIndex);
         }
         
-        if(flyInput.togglePause()) paused = !paused;
+        if(controls.ok("pause")) paused = !paused;
         
         if(!paused) {
-            for(RigidBody object : gravityObjects) {
+            for(SpaceObject object : gravityObjects) {
                 for(CelestialObject body : celestialObjects) {
-                    if(object != body) object.gravitateTowards(body, clock.sDeltaTime());
+                    if(object != body) object.gravitateTowards(body, time.sDeltaTime());
                 }
             }
 
-            for(UpdateObject gameObject : gameObjects) {
-                gameObject.update(clock, stateManager, input);
+            for(GameObject gameObject : gameObjects) {
+                gameObject.update(time, stateMgr, controls);
             }
         }
         
         space.setPos(WINDOW_CENTER.add(focusObject.getPos().mul(space.getScale()).neg()));
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-    @Override
-    public Vector getAbsPos() { return Vector.NULL; }
-    @Override
-    public double getAbsRotation() { return 0; }
-    @Override
-    public double getAbsScale() { return 1;}
-    
-    
 
 }

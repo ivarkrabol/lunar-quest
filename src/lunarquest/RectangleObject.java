@@ -1,18 +1,15 @@
 package lunarquest;
 
+import ggf.Parent;
 import ggf.geom.Vector;
-import java.awt.Color;
-import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
-public class RectangleObject extends TransformObject {
+public class RectangleObject extends PolygonObject {
     
-    private PolygonObject polygon;
     private Vector diag;
 
-    public RectangleObject(FrameOfReference parent, Rectangle2D rect, double rotation) {
-        super(parent, Vector.rectPos(rect), rotation);
-        polygon = new PolygonObject(this, Vector.rectPos(rect), rotation, 4);
+    public RectangleObject(Parent parent, Rectangle2D rect) {
+        super(parent);
         setDiag(Vector.rectDiag(rect));
     }
 
@@ -51,22 +48,9 @@ public class RectangleObject extends TransformObject {
         setPos(Vector.rectPos(rect));
         setDiag(Vector.rectDiag(rect));
     }
-
-    @Override
-    public void setX(double x) {
-        super.setX(x);
-        updatePolygon();
-        
-    }
-
-    @Override
-    public void setY(double y) {
-        super.setY(y);
-        updatePolygon();
-    }
     
     private void updatePolygon() {
-        polygon.setPoints(new Vector[]{
+        setPoints(new Vector[]{
              Vector.NULL,
              getDiag().getXComponent(),
              getDiag(),
@@ -74,42 +58,4 @@ public class RectangleObject extends TransformObject {
         });
     }
     
-    
-    
-    
-    
-    
-
-    @Override
-    public void setFill(boolean fill) {
-        super.setFill(fill);
-        polygon.setFill(fill);
-    }
-
-    @Override
-    public void setFillColor(Color fillColor) {
-        super.setFillColor(fillColor);
-        polygon.setFillColor(fillColor);
-    }
-
-    @Override
-    public void setEdge(boolean edge) {
-        super.setEdge(edge);
-        polygon.setEdge(edge);
-    }
-
-    @Override
-    public void setEdgeColor(Color edgeColor) {
-        super.setEdgeColor(edgeColor);
-        polygon.setEdgeColor(edgeColor);
-    }
-
-    @Override
-    public void draw(Graphics2D graphics) {
-        super.draw(graphics);
-        polygon.draw(graphics);
-    }
-    
-    
-
 }

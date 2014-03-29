@@ -1,51 +1,43 @@
 package lunarquest;
 
+import ggf.ShapeObject;
+import ggf.Parent;
 import ggf.geom.Vector;
-import java.awt.Graphics2D;
 
 public class MoonObject extends CelestialObject {
     
-    private TransformObject[] visualDetails;
+    private ShapeObject[] visualDetails;
     
-    public MoonObject(FrameOfReference parent, Vector pos, CelestialObject orbits) {
-        super(parent, pos, Vector.NULL, 17000);
-        attemptCircularOrbit(orbits);
-        setFillColor(LQConstants.COLOR_WHITEISH);
+    public MoonObject(Parent parent, Vector pos, CelestialObject orbitMajor) {
+        super(parent, pos, 17000);
+        attemptCircularOrbit(orbitMajor);
+        setFill(LQConstants.COLOR_WHITEISH);
         defineVisualDetails();
-        getIcon().setFillColor(LQConstants.COLOR_WHITEISH);
     }
     
     private void defineVisualDetails() {
-        CircleObject crater1 = new CircleObject(this, new Vector(-0.2, 0.4).mul(getRadius()), 0.3);
-        crater1.setFillColor(LQConstants.COLOR_LIGHT_GRAY);
+        CircleObject crater1 = new CircleObject(this, .3);
+        crater1.setFill(LQConstants.COLOR_LIGHT_GRAY);
         crater1.setScale(getRadius());
         
-        CircleObject crater2 = new CircleObject(this, new Vector(-0.5, -0.45).mul(getRadius()), 0.15);
-        crater2.setFillColor(LQConstants.COLOR_LIGHT_GRAY);
+        CircleObject crater2 = new CircleObject(this, 0.15);
+        crater2.setFill(LQConstants.COLOR_LIGHT_GRAY);
         crater2.setScale(getRadius());
         
-        CircleObject crater3 = new CircleObject(this, new Vector(-0.55, 0.0).mul(getRadius()), 0.4);
-        crater3.setFillColor(LQConstants.COLOR_LIGHT_GRAY);
+        CircleObject crater3 = new CircleObject(this, 0.4);
+        crater3.setFill(LQConstants.COLOR_LIGHT_GRAY);
         crater3.setScale(getRadius());
         
-        CircleObject crater4 = new CircleObject(this, new Vector(0.2, -0.5).mul(getRadius()), 0.2);
-        crater4.setFillColor(LQConstants.COLOR_LIGHT_GRAY);
+        CircleObject crater4 = new CircleObject(this, 0.2);
+        crater4.setFill(LQConstants.COLOR_LIGHT_GRAY);
         crater4.setScale(getRadius());
         
-        visualDetails = new TransformObject[]{
+        visualDetails = new ShapeObject[]{
             crater1,
             crater2,
             crater3,
             crater4
         };
-    }
-
-    @Override
-    public void drawDetailed(Graphics2D g) {
-        super.drawDetailed(g);
-        for(TransformObject detail : visualDetails) {
-            detail.draw(g);
-        }
     }
 
 }

@@ -4,6 +4,7 @@ import ggf.Game;
 import ggf.framework.GameTime;
 import ggf.framework.GraphicsManager;
 import ggf.framework.GameStateManager;
+import ggf.framework.InputHandler;
 import java.awt.Color;
 
 public class LunarQuest extends Game {
@@ -18,6 +19,11 @@ public class LunarQuest extends Game {
     @Override
     protected void setupTime(GameTime clock) {
         this.clock = clock;
+    }
+
+    @Override
+    protected void setupControls(InputHandler input) {
+        setControls(new LQControls(input));
     }
     
     @Override

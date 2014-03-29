@@ -1,7 +1,7 @@
 package lunarquest;
 
 import ggf.ShapeObject;
-import ggf.TransformObject;
+import ggf.Parent;
 import ggf.geom.Vector;
 import ggf.physics.RigidBody;
 import static ggf.physics.RigidBody.G;
@@ -10,26 +10,25 @@ import java.awt.Graphics2D;
 
 public class SpaceObject extends RigidBody {
     
-    private double maxRadius;
     private ShapeObject icon;
 
-    public SpaceObject(TransformObject parent, Vector pos) {
+    public SpaceObject(Parent parent, Vector pos) {
         super(parent, pos);
-        icon = new CircleObject(this, Vector.NULL, 6);
-        icon.setFillColor(Color.WHITE);
+        icon = new CircleObject(this, 6);
+        icon.setFill(Color.WHITE);
     }
 
     @Override
     public void draw(Graphics2D g) {
         
-        if(getMaxRadius()*getAbsScale() < 6) {
-            icon.setFillAlpha(255);
+        if(false) { //TODO: Draw icon condition
+            icon.setAlpha(255);
             drawIcon(g);
-        } else if(getMaxRadius()*getAbsScale() < 10) {
+        } else if(false) { //TODO: Draw fade condition
             drawDetailed(g);
             
-            int iconAlpha = (int)(255*(10 - getMaxRadius()*getAbsScale())/4);
-            icon.setFillAlpha(iconAlpha);
+            // finne riktig alpha
+            icon.setAlpha(127);
             drawIcon(g);
         } else {
             drawDetailed(g);
@@ -38,7 +37,7 @@ public class SpaceObject extends RigidBody {
     }
     
     protected void drawIcon(Graphics2D g) {
-        icon.setScale(1/getAbsScale());
+        icon.setScale(1); //TODO: Scale icon
         icon.draw(g);
     }
     

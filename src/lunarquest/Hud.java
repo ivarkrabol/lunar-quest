@@ -1,8 +1,9 @@
 package lunarquest;
 
+import ggf.GameObject;
+import ggf.TransformObject;
+import ggf.framework.Controls;
 import ggf.framework.GameTime;
-import ggf.framework.InputHandler;
-import ggf.UpdateObject;
 import ggf.framework.GameStateManager;
 import ggf.geom.Vector;
 import java.awt.Color;
@@ -11,7 +12,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
-public class Hud extends UpdateObject {
+public class Hud extends TransformObject implements GameObject {
 
     private static final Dimension screen = new Dimension(LQConstants.WINDOW_WIDTH, LQConstants.WINDOW_HEIGHT);
     private static final Point center = new Point(screen.width/2, screen.height/2);
@@ -25,26 +26,19 @@ public class Hud extends UpdateObject {
     private HudDisc earthDisc;
     
     public Hud(Vector pos, RocketObject rocket, MoonObject moon, EarthObject earth) {
-        super(pos);
-        
         this.rocket = rocket;
         this.moon = moon;
         this.earth = earth;
         
-        discRef = new TransformObject(null, new Vector(center.x, screen.height-25), -Math.PI/2) {
-            @Override public double getAbsScale() { return 1; }
-            @Override public double getAbsRotation() { return getRotation()-Math.PI/2; }
-            @Override public Vector getAbsPos() { return getPos(); }
-        };
+        discRef = new TransformObject();
         
-        velDisc = new HudDisc(discRef, Vector.NULL, 70, LQConstants.COLOR_GREEN);
-        moonDisc = new HudDisc(discRef, Vector.NULL, 55, LQConstants.COLOR_WHITEISH);
-        earthDisc = new HudDisc(discRef, Vector.NULL, 40, LQConstants.COLOR_BLUE);
+        velDisc = new HudDisc(discRef, 70, LQConstants.COLOR_GREEN);
+        moonDisc = new HudDisc(discRef, 55, LQConstants.COLOR_WHITEISH);
+        earthDisc = new HudDisc(discRef, 40, LQConstants.COLOR_BLUE);
     }
 
     @Override
     public void draw(Graphics2D g) {
-        super.draw(g);
         drawBackground(g);
         
         velDisc.draw(g);
@@ -55,13 +49,11 @@ public class Hud extends UpdateObject {
     }
 
     @Override
-    public void update(GameTime clock, GameStateManager gsm, InputHandler input) {
-        super.update(clock, gsm, input);
-        
-        discRef.setRotation(-rocket.getRotation());
-        velDisc.setRotation(rocket.getVel().angle());
-        moonDisc.setRotation(moon.getPos().sub(rocket.getPos()).angle());
-        earthDisc.setRotation(earth.getPos().sub(rocket.getPos()).angle());
+    public void update(GameTime time, GameStateManager stateMgr, Controls controls) {
+        discRef.setRot(-rocket.getRot());
+        velDisc.setRot(rocket.getVel().angle());
+        moonDisc.setRot(moon.getPos().sub(rocket.getPos()).angle());
+        earthDisc.setRot(earth.getPos().sub(rocket.getPos()).angle());
     }
     
     private void drawBackground(Graphics g) {

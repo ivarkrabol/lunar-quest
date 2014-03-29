@@ -4,62 +4,69 @@ import java.util.HashMap;
 
 public class Controls {
     
+    private enum InputType {
+        KEY_DOWN, KEY_PRESSED, KEY_RELEASED, 
+        MOUSE_DOWN, MOUSE_PRESSED, MOUSE_RELEASED
+    }
+    
     private InputHandler input;
-    private HashMap<String, Boolean> isKeyControl;
-    private HashMap<String, Integer> keyControlMap;
-    private HashMap<String, Integer> mouseControlMap;
+    private HashMap<String, InputType> inputTypeMap;
+    private HashMap<String, Integer> inputCodeMap;
     
     public Controls(InputHandler input) {
         this.input = input;
+        inputTypeMap = new HashMap();
+        inputCodeMap = new HashMap();
     }
     
-    public void addKeyControl(String name, int keyCode) {
-        isKeyControl.put(name, true);
-        keyControlMap.put(name, keyCode);
+    public void bindKeyDown(String name, int inputCode) {
+        inputTypeMap.put(name, InputType.KEY_DOWN);
+        inputCodeMap.put(name, inputCode);
     }
     
-    public void addMouseControl(String name, int mouseCode) {
-        isKeyControl.put(name, false);
-        mouseControlMap.put(name, mouseCode);
+    public void bindKeyPressed(String name, int inputCode) {
+        inputTypeMap.put(name, InputType.KEY_PRESSED);
+        inputCodeMap.put(name, inputCode);
     }
     
-    private boolean isKeyDown(String name) {
-        return input.isKeyDown(keyControlMap.get(name));
+    public void bindKeyReleased(String name, int inputCode) {
+        inputTypeMap.put(name, InputType.KEY_RELEASED);
+        inputCodeMap.put(name, inputCode);
     }
     
-    private boolean isKeyPressed(String name) {
-        return input.isKeyPressed(keyControlMap.get(name));
+    public void bindMouseDown(String name, int inputCode) {
+        inputTypeMap.put(name, InputType.MOUSE_DOWN);
+        inputCodeMap.put(name, inputCode);
     }
     
-    private boolean isKeyReleased(String name) {
-        return input.isKeyReleased(keyControlMap.get(name));
+    public void bindMousePressed(String name, int inputCode) {
+        inputTypeMap.put(name, InputType.MOUSE_PRESSED);
+        inputCodeMap.put(name, inputCode);
     }
     
-    private boolean isMouseDown(String name) {
-        return input.isMouseDown(mouseControlMap.get(name));
+    public void bindMouseReleased(String name, int inputCode) {
+        inputTypeMap.put(name, InputType.MOUSE_RELEASED);
+        inputCodeMap.put(name, inputCode);
     }
     
-    private boolean isMousePressed(String name) {
-        return input.isMousePressed(mouseControlMap.get(name));
-    }
-    
-    private boolean isMouseReleased(String name) {
-        return input.isMouseReleased(mouseControlMap.get(name));
-    }
-    
-    public boolean isDown(String name) {
-        if(isKeyControl.get(name)) return isKeyDown(name);
-        else return isMouseDown(name);
-    }
-    
-    public boolean isPressed(String name) {
-        if(isKeyControl.get(name)) return isKeyPressed(name);
-        else return isMousePressed(name);
-    }
-    
-    public boolean isReleased(String name) {
-        if(isKeyControl.get(name)) return isKeyReleased(name);
-        else return isMouseReleased(name);
+    public boolean ok(String name) {
+        if(!inputTypeMap.containsKey(name)) throw new IllegalArgumentException("No such key bound");
+        switch(inputTypeMap.get(name)) {
+            case KEY_DOWN:
+                return input.isKeyDown(inputCodeMap.get(name));
+            case KEY_PRESSED:
+                return input.isKeyPressed(inputCodeMap.get(name));
+            case KEY_RELEASED:
+                return input.isKeyReleased(inputCodeMap.get(name));
+            case MOUSE_DOWN:
+                return input.isMouseDown(inputCodeMap.get(name));
+            case MOUSE_PRESSED:
+                return input.isMousePressed(inputCodeMap.get(name));
+            case MOUSE_RELEASED:
+                return input.isMouseReleased(inputCodeMap.get(name));
+            default:
+                return false;
+        }
     }
 
 }

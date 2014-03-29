@@ -3,11 +3,10 @@ package ggf.physics;
 import ggf.framework.GameTime;
 import ggf.framework.GameStateManager;
 import ggf.ShapeObject;
-import ggf.TransformObject;
+import ggf.Parent;
 import ggf.framework.Controls;
 import ggf.geom.Vector;
 import java.awt.Shape;
-import java.awt.geom.Path2D;
 
 public class RigidBody extends ShapeObject {
     
@@ -17,8 +16,10 @@ public class RigidBody extends ShapeObject {
     private double mass;
     private CollisionPolygon collisionPolygon;
 
-    public RigidBody(TransformObject parent, Vector pos) {
+    public RigidBody(Parent parent, Vector pos) {
         super(parent);
+        setVel(Vector.NULL);
+        setMass(1);
     }
 
     public Vector getVel() {
@@ -37,14 +38,22 @@ public class RigidBody extends ShapeObject {
         this.mass = mass;
     }
 
-    public CollisionPolygon getCollisionPolygon() {
+    private CollisionPolygon getCollisionPolygon() {
         return collisionPolygon;
+    }
+
+    private void setCollisionPolygon(CollisionPolygon collisionPolygon) {
+        this.collisionPolygon = collisionPolygon;
+    }
+    
+    public double getBigRadius() {
+        return getCollisionPolygon().getBigRadius();
     }
 
     @Override
     public void setShape(Shape shape) {
         super.setShape(shape);
-        collisionPolygon = new CollisionPolygon(shape);
+        setCollisionPolygon(collisionPolygon);
     }
 
     @Override
@@ -52,8 +61,16 @@ public class RigidBody extends ShapeObject {
         setPos(getPos().add(getVel().mul(time.sDeltaTime())));
     }
     
+    public double[][] requestCollisionPoints(RigidBody initiator) {
+        return getCollisionPolygon().getPoints();
+    }
+    
     public boolean collision(RigidBody otherBody) {
-        
+        double[][] otherCollisionPolygon = otherBody.requestCollisionPoints(this);
+        for(double[] point : otherCollisionPolygon) {
+            if(getShape().contains(point[0], point[1])) return true;
+        }
+        return false;
     }
 
 }

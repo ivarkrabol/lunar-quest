@@ -1,15 +1,18 @@
 package lunarquest;
 
+import ggf.ShapeObject;
+import ggf.Parent;
 import ggf.geom.Vector;
-import java.awt.Graphics2D;
+import java.awt.geom.Ellipse2D;
 
-public class CircleObject extends TransformObject {
+public class CircleObject extends ShapeObject {
     
     private double radius;
 
-    public CircleObject(FrameOfReference parent, Vector pos, double radius) {
-        super(parent, pos, 0);
+    public CircleObject(Parent parent, double radius) {
+        super(parent);
         setRadius(radius);
+        setShape(new Ellipse2D.Double(-radius, -radius, 2*radius, 2*radius));
     }
 
     public double getRadius() {
@@ -18,22 +21,6 @@ public class CircleObject extends TransformObject {
 
     public void setRadius(double radius) {
         this.radius = radius;
-    }
-
-    @Override
-    public void draw(Graphics2D g) {
-        if(!hasFill() && !hasEdge()) return;
-        double absoluteRadius = radius*getAbsScale();
-        if(hasFill()) {
-            g.setColor(getFillColor());
-            g.fillOval((int)(getAbsPos().x - absoluteRadius), (int)(getAbsPos().y - absoluteRadius),
-                    (int)(2*absoluteRadius), (int)(2*absoluteRadius));
-        }
-        if(hasEdge()) {
-            g.setColor(getEdgeColor());
-            g.drawOval((int)(getAbsPos().x - absoluteRadius), (int)(getAbsPos().y - absoluteRadius),
-                    (int)(2*absoluteRadius), (int)(2*absoluteRadius));
-        }
     }
 
 }

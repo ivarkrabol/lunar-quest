@@ -41,7 +41,7 @@ public abstract class Game {
             
             @Override
             protected void init() {
-                graphicsMgr.addInputListeners(input, input);
+                addInputListeners(input, input);
             }
         };
         setupGraphics(graphicsMgr);
@@ -64,7 +64,7 @@ public abstract class Game {
     
     private void update() {
         time.update();
-        stateMgr.update(time, input);
+        stateMgr.update(time, controls);
         input.update();
     }
     
@@ -78,6 +78,10 @@ public abstract class Game {
     
     protected int getFramesPerSecond() {
         return framesPerSecond;
+    }
+
+    protected void setControls(Controls controls) {
+        this.controls = controls;
     }
     
     protected void setupTime(GameTime clock) {}
