@@ -36,7 +36,7 @@ public class HudDisc extends ShapeObject {
     }
 
     @Override
-    public void draw(Graphics2D g) {
+    public void draw(Graphics2D g) { //FIXME: Does not work after framework update
         super.draw(g);
         disc.setFill(Color.LIGHT_GRAY);
         disc.draw(g);
@@ -47,7 +47,7 @@ public class HudDisc extends ShapeObject {
         disc.draw(g2);
         marker.draw(g2);
         
-        marker.setRot(Math.PI);
+        marker.setRotation(Math.PI);
         Color c = marker.getFill();
         marker.setFill(c.darker().darker());
         marker.draw(g2);
@@ -55,7 +55,7 @@ public class HudDisc extends ShapeObject {
         g2.dispose();
         g.drawImage(img, 0, 0, null);
         
-        marker.setRot(0);
+        marker.setRotation(0);
         marker.setFill(c);
         
     }

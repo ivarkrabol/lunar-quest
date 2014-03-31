@@ -18,6 +18,7 @@ public class CelestialObject extends SpaceObject {
     public CelestialObject(Parent parent, Vector pos, double radius) {
         super(parent, pos);
         circle = new CircleObject(this, radius);
+        setShape(circle.getShape());
     }
     
     @Override
@@ -44,8 +45,18 @@ public class CelestialObject extends SpaceObject {
     }
 
     @Override
+    protected CollisionPolygon getCollisionPolygon() {
+        return new CollisionPolygon(new Path2D.Double()){
+            @Override public double getBigRadius() { return getRadius();}
+        };
+    }
+
+    @Override
+    protected void generateCollisionPolygon() { }
+
+    @Override
     public double[][] requestCollisionPoints(RigidBody initiator) {
-        Vector flatMiddle = initiator.getPos().sub(getPos()).toSize(getRadius());
+        Vector flatMiddle = initiator.getPosition().sub(getPosition()).toSize(getRadius());
         Vector lowMiddle = flatMiddle.toSize(getRadius() - 1);
         Vector flatRight = flatMiddle.add(flatMiddle.rot(Math.PI/2).toSize(initiator.getBigRadius()));
         Vector flatLeft = flatMiddle.mul(2).sub(flatRight);
@@ -53,6 +64,7 @@ public class CelestialObject extends SpaceObject {
         Path2D.Double collisionPath = new Path2D.Double();
         collisionPath.moveTo(lowMiddle.getX(), lowMiddle.getY());
         collisionPath.lineTo(flatRight.getX(), flatRight.getY());
+        collisionPath.moveTo(flatMiddle.getX(), flatMiddle.getY());
         collisionPath.lineTo(flatLeft.getX(), flatLeft.getY());
         collisionPath.closePath();
         
@@ -62,14 +74,14 @@ public class CelestialObject extends SpaceObject {
     }
 
     @Override
-    public boolean collision(RigidBody otherBody) {
+    public boolean collision(RigidBody otherBody, double deltaTime) {
         
         if(otherBody instanceof CelestialObject) {
             CelestialObject otherCB = (CelestialObject)otherBody;
-            return getPos().distance(otherCB.getPos()) < getRadius()+otherCB.getRadius();
+            return getPosition().distance(otherCB.getPosition()) < getRadius()+otherCB.getRadius();
         }
         
-        return super.collision(otherBody);
+        return super.collision(otherBody, deltaTime);
     }
 
     @Override

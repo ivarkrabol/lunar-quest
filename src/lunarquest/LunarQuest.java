@@ -10,18 +10,16 @@ import java.awt.Color;
 
 public class LunarQuest extends Game {
     
-    private GameTime clock;
-
     public LunarQuest() {
         init("Lunar Quest");
         start();
     }
-    
-    @Override
-    protected void setupTime(GameTime clock) {
-        this.clock = clock;
-    }
 
+    @Override
+    protected void setupTime(GameTime time) {
+        time.setTimeScale(0.001);
+    }
+    
     @Override
     protected void setupControls(InputHandler input) {
         setControls(new LQControls(input));
@@ -35,7 +33,7 @@ public class LunarQuest extends Game {
 
     @Override
     protected void setupStates(GameStateManager stateManager) {
-        stateManager.addState("FlyState", new FlyState(clock));
+        stateManager.addState("FlyState", new FlyState());
         stateManager.setCurrentState("FlyState");
     }
     

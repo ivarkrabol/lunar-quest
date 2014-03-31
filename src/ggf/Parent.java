@@ -4,6 +4,6 @@ import java.awt.geom.AffineTransform;
 
 public interface Parent {
 
-    public AffineTransform getTransform();
+    public AffineTransform getAbsoluteTx();
     
 }

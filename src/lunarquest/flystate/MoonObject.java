@@ -11,7 +11,7 @@ public class MoonObject extends CelestialObject {
     
     private ShapeObject[] visualDetails;
     
-    public MoonObject(Parent parent, Vector pos, CelestialObject orbitMajor) {
+    public MoonObject(Parent parent, Vector pos, SpaceObject orbitMajor) {
         super(parent, pos, 17000);
         attemptCircularOrbit(orbitMajor);
         setFill(LQConstants.COLOR_WHITEISH);

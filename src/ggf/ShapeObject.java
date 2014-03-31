@@ -71,17 +71,29 @@ public class ShapeObject extends TransformObject implements GameObject {
 
     @Override
     public void draw(Graphics2D g) {
-        Shape txShape = getTransform().createTransformedShape(getShape());
-        g.setColor(getFill());
-        g.fill(txShape);
-        g.setColor(getEdge());
-        g.draw(txShape);
+        if(getFill().getAlpha() == 0 && getEdge().getAlpha() == 0) return;
+        
+        Shape txShape = getAbsoluteTx().createTransformedShape(getShape());
+        
+        if(getFill().getAlpha() != 0) {
+            g.setColor(getFill());
+            g.fill(txShape);
+        }
+        
+        if(getEdge().getAlpha() != 0) {
+            g.setColor(getEdge());
+            g.draw(txShape);
+        }
+    }
+    
+    public AffineTransform getLocalTX() {
+        return new AffineTransform(super.getAbsoluteTx());
     }
 
     @Override
-    public AffineTransform getTransform() {
-        AffineTransform parentTx = getParent().getTransform();
-        parentTx.concatenate(super.getTransform());
+    public AffineTransform getAbsoluteTx() {
+        AffineTransform parentTx = getParent().getAbsoluteTx();
+        parentTx.concatenate(super.getAbsoluteTx());
         return new AffineTransform(parentTx);
     }
 

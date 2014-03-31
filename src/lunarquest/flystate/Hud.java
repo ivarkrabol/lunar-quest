@@ -32,7 +32,7 @@ public class Hud extends TransformObject implements GameObject {
         this.earth = earth;
         
         discRef = new TransformObject();
-        discRef.setPos(new Vector(center.getX(), screen.getHeight()-25));
+        discRef.setPosition(new Vector(center.getX(), screen.getHeight()-25));
         
         velDisc = new HudDisc(discRef, 70, LQConstants.COLOR_GREEN);
         moonDisc = new HudDisc(discRef, 55, LQConstants.COLOR_WHITEISH);
@@ -52,10 +52,10 @@ public class Hud extends TransformObject implements GameObject {
 
     @Override
     public void update(GameTime time, GameStateManager stateMgr, Controls controls) {
-        discRef.setRot(-rocket.getRot());
-        velDisc.setRot(rocket.getVel().angle());
-        moonDisc.setRot(moon.getPos().sub(rocket.getPos()).angle());
-        earthDisc.setRot(earth.getPos().sub(rocket.getPos()).angle());
+        discRef.setRotation(-rocket.getRotation());
+        velDisc.setRotation(rocket.getVel().angle());
+        moonDisc.setRotation(moon.getPosition().sub(rocket.getPosition()).angle());
+        earthDisc.setRotation(earth.getPosition().sub(rocket.getPosition()).angle());
     }
     
     private void drawBackground(Graphics g) {

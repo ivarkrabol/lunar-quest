@@ -84,7 +84,7 @@ public abstract class Game {
         this.controls = controls;
     }
     
-    protected void setupTime(GameTime clock) {}
+    protected void setupTime(GameTime time) {}
     protected void setupControls(InputHandler input) {}
     protected void setupStates(GameStateManager stateManager) {}
     protected void setupGraphics(GraphicsManager graphicsManager) {}

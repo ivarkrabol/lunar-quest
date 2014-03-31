@@ -5,30 +5,30 @@ import java.awt.geom.AffineTransform;
 
 public class TransformObject implements Parent {
     
-    private Vector pos;
-    private double rot;
+    private Vector position;
+    private double rotation;
     private double scale;
 
     public TransformObject() {
-        pos = new Vector(0,0);
-        rot = 0;
+        position = new Vector(0,0);
+        rotation = 0;
         scale = 1;
     }
 
-    public Vector getPos() {
-        return pos;
+    public Vector getPosition() {
+        return position;
     }
 
-    public void setPos(Vector pos) {
-        this.pos = pos;
+    public void setPosition(Vector position) {
+        this.position = position;
     }
 
-    public double getRot() {
-        return rot;
+    public double getRotation() {
+        return rotation;
     }
 
-    public void setRot(double rot) {
-        this.rot = rot;
+    public void setRotation(double rotation) {
+        this.rotation = rotation;
     }
 
     public double getScale() {
@@ -40,10 +40,10 @@ public class TransformObject implements Parent {
     }
 
     @Override
-    public AffineTransform getTransform() {
+    public AffineTransform getAbsoluteTx() {
         AffineTransform tx = new AffineTransform();
-        tx.translate(getPos().getX(), getPos().getY());
-        tx.rotate(getRot());
+        tx.translate(getPosition().getX(), getPosition().getY());
+        tx.rotate(getRotation());
         tx.scale(getScale(), getScale());
         return new AffineTransform(tx);
     }

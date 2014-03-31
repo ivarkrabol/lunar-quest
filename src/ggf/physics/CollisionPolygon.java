@@ -18,6 +18,7 @@ public class CollisionPolygon {
         PathIterator iterator = shape.getPathIterator(null);
         ArrayList<double[]> pointsList = new ArrayList();
         double[] currentCoords = new double[2];
+//        System.out.println("Generating CollisionPolygon from " + shape);
         while(!iterator.isDone()) {
             double[] nextCoords = new double[2];
             iterator.currentSegment(nextCoords);
@@ -27,8 +28,13 @@ public class CollisionPolygon {
                 currentCoords = nextCoords;
                 pointsList.add(currentCoords);
             }
+            iterator.next();
         }
-        points = pointsList.toArray(points);
+        points = pointsList.toArray(new double[0][0]);
+    }
+    
+    public CollisionPolygon(Shape shape) {
+        this(shape, DEFAULT_SEGMENT_LENGTH);
     }
 
     public double[][] getPoints() {
@@ -37,9 +43,5 @@ public class CollisionPolygon {
 
     public double getBigRadius() {
         return bigRadius;
-    }
-    
-    public CollisionPolygon(Shape shape) {
-        this(shape, DEFAULT_SEGMENT_LENGTH);
     }
 }

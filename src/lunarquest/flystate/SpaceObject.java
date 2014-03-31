@@ -44,18 +44,15 @@ public class SpaceObject extends RigidBody {
     
     protected void drawDetailed(Graphics2D g) { }
     
-    public void gravitateTowards(CelestialObject body, double deltaTime) {
-        
-        // Se serviett for utregning;
-        
-        Vector thisToBody = body.getPos().sub(getPos());
+    public void gravitateTowards(SpaceObject body, double deltaTime) {
+        Vector thisToBody = body.getPosition().sub(getPosition());
         double distanceCubed = Math.pow(thisToBody.size(), 3);
         Vector acc = thisToBody.mul(G * body.getMass() / distanceCubed);
-        setVel(getVel().add(acc.mul(deltaTime)));
+        move(acc.mul(deltaTime));
     }
     
-    public void attemptCircularOrbit(CelestialObject body) {
-        Vector thisToBody = body.getPos().sub(getPos());
+    public void attemptCircularOrbit(SpaceObject body) {
+        Vector thisToBody = body.getPosition().sub(getPosition());
         double distance = thisToBody.size();
         double velocity = Math.sqrt(G*(body.getMass() + getMass()) / distance);
         Vector direction = new Vector(thisToBody.y, -thisToBody.x).unit();

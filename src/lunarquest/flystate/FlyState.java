@@ -2,99 +2,118 @@ package lunarquest.flystate;
 
 import ggf.physics.RigidBody;
 import ggf.framework.GameTime;
-import ggf.GameObject;
-import ggf.GameState;
-import ggf.TransformObject;
 import ggf.framework.Controls;
 import ggf.framework.GameStateManager;
 import ggf.geom.Vector;
+import ggf.physics.PhysicsState;
 import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import lunarquest.LQConstants;
+import lunarquest.PolygonObject;
 
-public class FlyState extends GameState {
+public class FlyState extends PhysicsState {
     
     public static final Vector WINDOW_CENTER = new Vector(LQConstants.WINDOW_WIDTH/2, LQConstants.WINDOW_HEIGHT/2);
 
-    private ArrayList<GameObject> gameObjects;
-    private ArrayList<CelestialObject> celestialObjects;
-    private ArrayList<SpaceObject> gravityObjects;
-    private TransformObject space;
-    private AffineTransform spaceTransform;
+    private ArrayList<SpaceObject> spaceObjects;
     private RocketObject rocket;
-    private boolean paused;
     private int focusIndex;
     private RigidBody focusObject;
     private Hud hud;
     
     
-    public FlyState(GameTime clock) {
-        gameObjects = new ArrayList();
-        celestialObjects = new ArrayList();
-        gravityObjects = new ArrayList();
+    public FlyState() {
+        view.setPosition(WINDOW_CENTER);
+        view.setScale(1000);
         
-        space = new TransformObject();
-        space.setPos(WINDOW_CENTER);
-        space.setScale(1000);
         
-        EarthObject earth = new EarthObject(space, Vector.NULL);
-        celestialObjects.add(earth);
-        gravityObjects.add(earth);
-        gameObjects.add(earth);
         
-        MoonObject moon = new MoonObject(space, new Vector(4000000, 0), earth);
-        celestialObjects.add(moon);
-        gravityObjects.add(moon);
-        gameObjects.add(moon);
         
-        rocket = new RocketObject(space, new Vector(3970000, 0));
-        rocket.attemptCircularOrbit(moon);
-        gravityObjects.add(rocket);
-        gameObjects.add(rocket);
+        spaceObjects = new ArrayList();
         
-        paused = true;
-        focusIndex = 2;
-        focusObject = gravityObjects.get(focusIndex);
+        EarthObject earth = new EarthObject(view, Vector.NULL);
+        spaceObjects.add(earth);
+        
+        MoonObject moon = new MoonObject(view, new Vector(4000000, 0), earth);
+        spaceObjects.add(moon);
+        
+        SpaceObject asteroid = new SpaceObject(view, new Vector(3970010, 2));
+        PolygonObject asteroidGraphic = new PolygonObject(asteroid);
+        asteroidGraphic.setPoints(
+                new double[]{-1.1,-0.5,-0.4, 0.4, 0.4, 0.8, 1.0, 0.8, 0.1,-0.2,-0.7},
+                new double[]{-0.1,-0.8,-1.1,-1.0,-0.7,-0.4, 0.1, 0.8, 0.9, 0.5, 0.5});
+        asteroidGraphic.setFill(LQConstants.COLOR_LIGHT_GRAY);
+        gameObjects.add(asteroidGraphic);
+        asteroid.setShape(asteroidGraphic.getShape());
+        asteroid.attemptCircularOrbit(earth);
+        spaceObjects.add(asteroid);
+        
+        rocket = new RocketObject(view, new Vector(60001, 0));
+//        rocket.attemptCircularOrbit(moon);
+        spaceObjects.add(rocket);
+        
+        
+        
+        
+        physicsObjects.addAll(spaceObjects);
+        gameObjects.addAll(physicsObjects);
+        
+        
+        
+        
+        focusObject = rocket;
+        focusIndex = physicsObjects.indexOf(rocket);
         
         hud = new Hud(Vector.NULL, rocket, moon, earth);
         gameObjects.add(hud);
+        
+        
     }
     
     @Override
     public void draw(Graphics2D g) {
-        for(GameObject gameObject : gameObjects) {
-            gameObject.draw(g);
-        }
+        super.draw(g);
+        
+        rocket.drawCollision(g, view.getAbsoluteTx());
     }
 
     @Override
     public void update(GameTime time, GameStateManager stateMgr, Controls controls) {
-        if(controls.ok("zoom_in")) space.setScale(space.getScale()*Math.pow(1.1, time.deltaTime()*0.01));
-        if(controls.ok("zoom_out")) space.setScale(space.getScale()*Math.pow(1.1, -time.deltaTime()*0.01));
-        if(controls.ok("speed_up")) time.setTimeScale(time.getTimeScale()*Math.pow(1.1, time.deltaTime()*0.01));
-        if(controls.ok("slow_down")) time.setTimeScale(time.getTimeScale()*Math.pow(1.1, -time.deltaTime()*0.01));
         
-        if(controls.ok("focus")) {
-            if(++focusIndex >= gravityObjects.size()) focusIndex = 0;
-            focusObject = gravityObjects.get(focusIndex);
+        // CONTROLS HANDLING
+        
+        //     ZOOM
+        if(controls.is("zoom_in")) view.setScale(view.getScale()*Math.pow(1.1, time.deltaTime()*0.01));
+        if(controls.is("zoom_out")) view.setScale(view.getScale()*Math.pow(1.1, -time.deltaTime()*0.01));
+        
+        //     SPEED
+        if(controls.is("speed_up")) time.setTimeScale(time.getTimeScale()*Math.pow(1.1, time.deltaTime()*0.01));
+        if(controls.is("slow_down")) time.setTimeScale(time.getTimeScale()*Math.pow(1.1, -time.deltaTime()*0.01));
+        
+        //     FOCUS
+        if(controls.is("focus")) {
+            if(++focusIndex >= physicsObjects.size()) focusIndex = 0;
+            focusObject = physicsObjects.get(focusIndex);
         }
         
-        if(controls.ok("pause")) paused = !paused;
+        //     PAUSE
+        if(controls.is("pause")) paused = !paused;
+        
         
         if(!paused) {
-            for(SpaceObject object : gravityObjects) {
-                for(CelestialObject body : celestialObjects) {
-                    if(object != body) object.gravitateTowards(body, time.sDeltaTime());
+            
+            
+            // GRAVITY
+            for(SpaceObject object1 : spaceObjects) {
+                for(SpaceObject object2 : spaceObjects) {
+                    if(object1 != object2) object1.gravitateTowards(object2, time.sDeltaTime());
                 }
             }
-
-            for(GameObject gameObject : gameObjects) {
-                gameObject.update(time, stateMgr, controls);
-            }
+            
+            
         }
         
-        space.setPos(WINDOW_CENTER.add(focusObject.getPos().mul(space.getScale()).neg()));
+        view.setPosition(WINDOW_CENTER.add(focusObject.getPosition().mul(view.getScale()).neg()));
     }
 
 }

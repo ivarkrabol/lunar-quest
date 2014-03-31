@@ -41,11 +41,11 @@ public class RectangleObject extends PolygonObject {
     }
 
     public Rectangle2D getRect() {
-        return Vector.rect(getPos(), getDiag());
+        return Vector.rect(getPosition(), getDiag());
     }
 
     public void setRect(Rectangle2D rect) {
-        setPos(Vector.rectPos(rect));
+        setPosition(Vector.rectPos(rect));
         setDiag(Vector.rectDiag(rect));
     }
     
