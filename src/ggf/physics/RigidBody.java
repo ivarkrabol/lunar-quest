@@ -6,6 +6,7 @@ import ggf.ShapeObject;
 import ggf.Parent;
 import ggf.framework.Controls;
 import ggf.geom.Vector;
+import ggf.geom.Vector;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Shape;
@@ -69,7 +70,7 @@ public class RigidBody extends ShapeObject {
     }
     
     public void move(Vector deltaPos) {
-        setPosition(getPosition().add(deltaPos));
+        setPosition(new Vector(getPosition().add(deltaPos)));
     }
     
     public double[][] requestCollisionPoints(RigidBody initiator) {

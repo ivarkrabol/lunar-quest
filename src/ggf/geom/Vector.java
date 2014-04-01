@@ -85,15 +85,11 @@ public class Vector extends Point2D.Double {
         return new Vector(Math.cos(direction), Math.sin(direction));
     }
     
-    public static Vector rectPos(Rectangle2D rect) {
-        return new Vector(rect.getX(), rect.getY());
+    public static Vector rectanglePosition(Rectangle2D rectangle) {
+        return new Vector(rectangle.getX(), rectangle.getY());
     }
     
-    public static Vector rectDiag(Rectangle2D rect) {
-        return new Vector(rect.getWidth(), rect.getHeight());
-    }
-    
-    public static Rectangle2D.Double rect(Point2D.Double pos, Point2D.Double diag) {
-        return new Rectangle2D.Double(pos.getX(), pos.getY(), diag.getX(), diag.getY());
+    public static Vector rectangleDiagonal(Rectangle2D rectangle) {
+        return new Vector(rectangle.getWidth(), rectangle.getHeight());
     }
 }

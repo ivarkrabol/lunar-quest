@@ -1,6 +1,7 @@
 package lunarquest.flystate;
 
 import ggf.Parent;
+import ggf.geom.Vector;
 import ggf.physics.RigidBody;
 import ggf.geom.Vector;
 import ggf.physics.CollisionPolygon;

@@ -3,6 +3,7 @@ package lunarquest.flystate;
 import ggf.ShapeObject;
 import ggf.Parent;
 import ggf.geom.Vector;
+import ggf.geom.Vector;
 import ggf.physics.RigidBody;
 import static ggf.physics.RigidBody.G;
 import java.awt.Color;

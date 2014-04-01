@@ -5,6 +5,7 @@ import ggf.framework.GameTime;
 import ggf.framework.Controls;
 import ggf.framework.GameStateManager;
 import ggf.geom.Vector;
+import ggf.geom.Vector;
 import ggf.physics.PhysicsState;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ public class FlyState extends PhysicsState {
         
         spaceObjects = new ArrayList();
         
-        EarthObject earth = new EarthObject(view, Vector.NULL);
+        EarthObject earth = new EarthObject(view, new Vector(0, 0));
         spaceObjects.add(earth);
         
         MoonObject moon = new MoonObject(view, new Vector(4000000, 0), earth);
@@ -113,7 +114,7 @@ public class FlyState extends PhysicsState {
             
         }
         
-        view.setPosition(WINDOW_CENTER.add(focusObject.getPosition().mul(view.getScale()).neg()));
+        view.setPosition(new Vector(WINDOW_CENTER.add(focusObject.getPosition().mul(view.getScale()).neg())));
     }
 
 }

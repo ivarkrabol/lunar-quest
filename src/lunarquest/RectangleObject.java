@@ -2,59 +2,62 @@ package lunarquest;
 
 import ggf.Parent;
 import ggf.geom.Vector;
+import ggf.geom.Vector;
 import java.awt.geom.Rectangle2D;
 
 public class RectangleObject extends PolygonObject {
     
-    private Vector diag;
+    private Vector diagonal;
 
     public RectangleObject(Parent parent, Rectangle2D rect) {
         super(parent);
-        setDiag(Vector.rectDiag(rect));
+        setDiagonal(Vector.rectangleDiagonal(rect));
     }
 
-    public Vector getDiag() {
-        return diag;
+    public Vector getDiagonal() {
+        return diagonal;
     }
 
-    public void setDiag(Vector diag) {
-        this.diag = diag;
+    public void setDiagonal(Vector diagonal) {
+        this.diagonal = diagonal;
         updatePolygon();
     }
     
     public double getWidth() {
-        return diag.getX();
+        return diagonal.getX();
     }
 
     public void setWidth(double width) {
-        diag.setX(width);
+        diagonal.setX(width);
         updatePolygon();
     }
 
     public double getHeight() {
-        return diag.getY();
+        return diagonal.getY();
     }
 
     public void setHeight(double height) {
-        diag.setY(height);
+        diagonal.setY(height);
         updatePolygon();
     }
 
-    public Rectangle2D getRect() {
-        return Vector.rect(getPosition(), getDiag());
+    public Rectangle2D getRectangle() {
+        return new Rectangle2D.Double(
+                getPosition().getX(), getPosition().getY(),
+                getDiagonal().getX(), getDiagonal().getY());
     }
 
-    public void setRect(Rectangle2D rect) {
-        setPosition(Vector.rectPos(rect));
-        setDiag(Vector.rectDiag(rect));
+    public void setRectangle(Rectangle2D rectangle) {
+        setPosition(new Vector(Vector.rectanglePosition(rectangle)));
+        setDiagonal(Vector.rectangleDiagonal(rectangle));
     }
     
     private void updatePolygon() {
         setPoints(new Vector[]{
              Vector.NULL,
-             getDiag().getXComponent(),
-             getDiag(),
-             getDiag().getYComponent()
+             getDiagonal().getXComponent(),
+             getDiagonal(),
+             getDiagonal().getYComponent()
         });
     }
     

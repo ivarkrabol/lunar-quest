@@ -6,17 +6,17 @@ import ggf.framework.Controls;
 import ggf.framework.GameTime;
 import ggf.framework.GameStateManager;
 import ggf.geom.Vector;
+import ggf.geom.Vector;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Point;
 import lunarquest.LQConstants;
 
 public class Hud extends TransformObject implements GameObject {
 
     private static final Dimension screen = new Dimension(LQConstants.WINDOW_WIDTH, LQConstants.WINDOW_HEIGHT);
-    private static final Point center = new Point(screen.width/2, screen.height/2);
+    private static final java.awt.Point center = new java.awt.Point(screen.width/2, screen.height/2);
     
     private RocketObject rocket;
     private MoonObject moon;

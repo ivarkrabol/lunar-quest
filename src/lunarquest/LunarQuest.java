@@ -34,7 +34,8 @@ public class LunarQuest extends Game {
     @Override
     protected void setupStates(GameStateManager stateManager) {
         stateManager.addState("FlyState", new FlyState());
-        stateManager.setCurrentState("FlyState");
+        stateManager.addState("PointMassState", new PointMassState());
+        stateManager.setCurrentState("PointMassState");
     }
     
     public static void main(String[] args) {
